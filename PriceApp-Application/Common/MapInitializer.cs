@@ -14,11 +14,19 @@ namespace PriceApp_Application.Common
     {
         public MapInitializer()
         {
+            CreateMap<User, UserResponseDto>();
+            CreateMap<Product, ProductResponseDto>();
+
             CreateMap<ProductRequestDto, Product>();
             CreateMap<Product, ProductResponseDto>();
 
-            CreateMap<UserRequestDto, UserResponseDto>();
-            CreateMap<UserResponseDto, UserResponseDto>();
+            CreateMap<ProductUpdateRequestDto, Product>();
+            CreateMap<Product, ProductUpdateResponseDto>();
+
+            CreateMap<UserRequestDto, User>();
+            CreateMap<User, UserResponseDto>();
+
+           
         }
     }
 }

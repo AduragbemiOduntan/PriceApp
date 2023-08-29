@@ -32,21 +32,92 @@ namespace PriceApp_Application.Services.Implementation
 
         public async Task<StandardResponse<IEnumerable<UserResponseDto>>> GetAllUsersAsync(bool trackChanges)
         {
-
             _logger.LogInformation($"Attempting to get users {DateTime.Now}");
-            var users = await _unitOfWork.User.FindAll(trackChanges).ToListAsync();
-           var returnUsers = _mapper.Map<IEnumerable<UserResponseDto>>(users);
+            var users = await _unitOfWork.User.FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
 
-            /*
-                        var usersReturned = _mapper.Map<UserResponseDto>(IEnumerable<User>);
+            if (users == null)
+            {
+                _logger.LogError("No user exist");
+                return StandardResponse<IEnumerable<UserResponseDto>>.Failed($"Users do not exist");
+            }
 
-                        if (users == null)
-                        {
-                            _logger.LogError("No user available");
-                        }*/
-
-            return StandardResponse<IEnumerable<UserResponseDto>>.Success($"Users successfully retrieved", returnUsers);
+            var usersReturned = _mapper.Map<IEnumerable<UserResponseDto>>(users);
+            return StandardResponse<IEnumerable<UserResponseDto>>.Success($"Users successfully retrieved", usersReturned);
         }
 
+        public async Task<StandardResponse<UserResponseDto>> GetUserByIdAsync(string id, bool trackChanges)
+        {
+            if (id == null)
+            {
+                _logger.LogError("Id field cannot be empty");
+                return StandardResponse<UserResponseDto>.Failed("Id field cannot be empty");
+            }
+
+            _logger.LogInformation($"Attempting to get user with id {id} {DateTime.Now}");
+            var user = await _unitOfWork.User.FindUserById(id, trackChanges);
+
+            if (user == null)
+            {
+                _logger.LogError($"User does not exit");
+                return StandardResponse<UserResponseDto>.Failed($"User does not exist");
+            }
+            var userReturned = _mapper.Map<UserResponseDto>(user);
+            return StandardResponse<UserResponseDto>.Success($"User successfully retrieved", userReturned);
+        }
+
+        public async Task<StandardResponse<UserResponseDto>> GetUserByEmailAsnc(string email, bool trackChanges)
+        {
+            if (email == null)
+            {
+                _logger.LogError("Email field cannot be empty");
+                return StandardResponse<UserResponseDto>.Failed("Email field cannot be empty");
+            }
+
+            _logger.LogInformation($"Attempting to get user with email {email} {DateTime.Now}");
+            var user = await _unitOfWork.User.FindUserByEmail(email, trackChanges);
+
+            if (user == null)
+            {
+                _logger.LogError($"User does not exit");
+                return StandardResponse<UserResponseDto>.Failed($"User does not exist");
+            }
+
+            var userReturned = _mapper.Map<UserResponseDto>(user);
+            return StandardResponse<UserResponseDto>.Success($"User successfully retrieved", userReturned);
+        }
+
+        public async Task<StandardResponse<User>> DeleteUserByIdAsync(string id, bool trackChanges)
+        {
+            _logger.LogInformation($"Attempting to delete user with id {id}");
+            var user = await _unitOfWork.User.FindUserById(id, trackChanges);
+
+            if (user == null)
+            {
+                _logger.LogError($"User does not exit");
+                return StandardResponse<User>.Failed($"The user with id {id} does not exist");
+            }
+            _unitOfWork.User.Delete(user);
+            await _unitOfWork.SaveAsync();
+            return StandardResponse<User>.Success($"Delete successful", user);
+        }
+
+        public async Task<StandardResponse<User>> DeleteUserByEmailAsync(string email, bool trackChanges)
+        {
+            if (email == null)
+            {
+                _logger.LogError($"Email field cannot be empty");
+                return StandardResponse<User>.Failed("Email field cannot be empty");
+            }
+            var user = await _unitOfWork.User.FindUserByEmail(email, trackChanges);
+
+            if (user == null)
+            {
+                _logger.LogError($"User does not exit");
+                return StandardResponse<User>.Failed($"The user with email {email} does not exist");
+            }
+            _unitOfWork.User.Delete(user);
+            await _unitOfWork.SaveAsync();
+            return StandardResponse<User>.Success($"Delete successful", user);
+        }
     }
 }

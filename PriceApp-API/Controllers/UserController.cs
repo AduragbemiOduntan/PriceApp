@@ -16,10 +16,39 @@ namespace PriceApp_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers(bool trackChanges)
+        [Route("get-allUser")]
+        public async Task<IActionResult> GetAllUsers(bool trackChanges)
         {
             var result = await _userService.GetAllUsersAsync(trackChanges);
             return Ok(result);
         }
+
+        [HttpGet("id")]
+        public async Task<IActionResult> GetUserById(string id, bool trackChanges)
+        {
+            var result = await _userService.GetUserByIdAsync(id, trackChanges);
+            return Ok(result);
+        }
+
+        [HttpGet("email")]
+        public async Task<IActionResult> GetUserByEmail(string email, bool trackChanges)
+        {
+             var result = await _userService.GetUserByEmailAsnc(email, trackChanges);
+            return Ok(result);
+        }
+
+/*        [HttpDelete]
+        public async Task<IActionResult> DeleteUserById(string id, bool trackChanges)
+        {
+            var result = await _userService.DeleteUserByIdAsync(id, trackChanges);
+            return Ok(result);
+        }
+
+        [HttpDelete("email")]
+        public async Task<IActionResult> DeleteUserByEmail(string email, bool trackChanges)
+        {
+            var result = await _userService.DeleteUserByEmailAsync(email, trackChanges);
+            return Ok(result);
+        }*/
     }
 }

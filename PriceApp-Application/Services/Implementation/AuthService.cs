@@ -30,7 +30,7 @@ namespace PriceApp_Application.Services.Implementation
             _configuration = configuration;
         }
 
-        public async Task<IdentityResult> RegisterAsync(UserRequestDto userRequest)
+        public async Task<StandardResponse<IdentityResult>> RegisterAsync(UserRequestDto userRequest)
         {
             if (userRequest == null)
             {
@@ -46,7 +46,7 @@ namespace PriceApp_Application.Services.Implementation
                 await _userManager.AddToRolesAsync(newUser, userRequest.Roles);
                 /*_logger.LogInformation($"User successfully created");*/
             }
-            return createdUser;
+            return  StandardResponse<IdentityResult>.Success($"User successfully created{createdUser}", createdUser);
         }
 
         public async Task<IdentityResult> LoginAsync(UserLoginRequestDto userLoginRequest)

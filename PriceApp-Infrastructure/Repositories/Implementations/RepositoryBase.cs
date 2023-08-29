@@ -20,13 +20,16 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
 
         public IQueryable<T> FindAll(bool trackChanges)
         {
-            return !trackChanges ? _context.Set<T>().AsNoTracking() : _context.Set<T>();
+            return !trackChanges ?
+                _context.Set<T>().AsNoTracking() :
+                _context.Set<T>();
         }
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges)
         {
-            return !trackChanges ? _context.Set<T>().Where(expression)
-                .AsNoTracking() : _context.Set<T>().Where(expression);
+            return !trackChanges ? 
+                _context.Set<T>().Where(expression).AsNoTracking() :
+                _context.Set<T>().Where(expression);
         }
 
         public void Create(T entity)

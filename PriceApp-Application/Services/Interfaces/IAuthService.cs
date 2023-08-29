@@ -11,7 +11,8 @@ namespace PriceApp_Application.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<IdentityResult> RegisterAsync(UserRequestDto userRequest);
+        /*    Task<IdentityResult> RegisterAsync(UserRequestDto userRequest);*/
+        Task<StandardResponse<IdentityResult>> RegisterAsync(UserRequestDto userRequest);
         Task<IdentityResult> LoginAsync(UserLoginRequestDto userLoginRequest);
     }
 }

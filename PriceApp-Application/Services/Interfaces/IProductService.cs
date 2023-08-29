@@ -1,5 +1,6 @@
 ﻿using PriceApp_Domain.Dtos.Requests;
 using PriceApp_Domain.Dtos.Responses;
+using PriceApp_Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace PriceApp_Application.Services.Interfaces
     public interface IProductService
     {
         Task<StandardResponse<ProductResponseDto>> CreateProduct(ProductRequestDto productRequest);
-
+        Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetAllProductAsync(bool trackChanges);
+        Task<StandardResponse<ProductResponseDto>> GetProductByIdAsync(int id, bool trackChanges);
+        Task<StandardResponse<ProductResponseDto>> GetProductByNameAsync(string productName, bool trackChanges);
+        Task<StandardResponse<ProductUpdateResponseDto>> UpdateProductUnitPriceAsync(ProductUpdateRequestDto productRequest, int id, bool trackChanges);
+        Task<StandardResponse<Product>> DeleteProductAsync(int id, bool trackChanges);
+        Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetProductByKeyWordAsync(string keyword, bool track);
     }
 }
