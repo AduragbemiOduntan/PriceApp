@@ -34,6 +34,7 @@ namespace PriceApp_Infrastructure.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -63,7 +64,7 @@ namespace PriceApp_Infrastructure.Migrations
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitOfMeasurement = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "money", nullable: false),
+                    UnitPrice = table.Column<double>(type: "float", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -178,13 +179,89 @@ namespace PriceApp_Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Project",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Project", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Project_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Estimate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estimate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Estimate_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Estimate_Project_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Project",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaterialEstimates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitOfMeasurement = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitPrice = table.Column<double>(type: "float", nullable: false),
+                    Quantity = table.Column<double>(type: "float", nullable: false),
+                    TotalPrice = table.Column<double>(type: "float", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstimateId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialEstimates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MaterialEstimates_Estimate_EstimateId",
+                        column: x => x.EstimateId,
+                        principalTable: "Estimate",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "180fd1fb-3761-4355-888d-1d4d74a5d8a2", null, "Admin", "ADMIN" },
-                    { "765a04c0-078e-417a-b60e-15767c630be4", null, "User", "USER" }
+                    { "752b58ef-c36c-4a33-8315-c07749cee973", null, "User", "USER" },
+                    { "80e88ff5-ff9c-4a82-9d41-980daf9a2231", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -192,8 +269,8 @@ namespace PriceApp_Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "ModifiedAt", "ProductName", "UnitOfMeasurement", "UnitPrice" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4770), "Sharp sand", new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4846), "Sand", "Ton", 500000m },
-                    { 2, new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4859), "Water proof", new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4860), "Cement", "Bag", 8000m }
+                    { 1, new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6428), "Sharp sand", new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6488), "Sand", "Ton", 500000.0 },
+                    { 2, new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6493), "Water proof", new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6494), "Cement", "Bag", 8000.0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -234,6 +311,26 @@ namespace PriceApp_Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estimate_ProjectId",
+                table: "Estimate",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estimate_UserId",
+                table: "Estimate",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialEstimates_EstimateId",
+                table: "MaterialEstimates",
+                column: "EstimateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Project_UserId",
+                table: "Project",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -255,10 +352,19 @@ namespace PriceApp_Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "MaterialEstimates");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Estimate");
+
+            migrationBuilder.DropTable(
+                name: "Project");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

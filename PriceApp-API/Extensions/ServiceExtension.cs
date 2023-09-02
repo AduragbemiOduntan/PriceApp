@@ -16,6 +16,9 @@ namespace PriceApp_API.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMaterialEstimateService, MaterialEstimateService>();
+         /*   services.AddScoped<ISettingOutStageService, SettingOutStageService>();*/
+
         }
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)

@@ -14,7 +14,8 @@ namespace PriceApp_Domain.Entities
         public string ProductName { get; set; }
         public string Description { get; set; }
         public string UnitOfMeasurement { get; set; }
-        [Column(TypeName = "money")]
-        public decimal UnitPrice { get; set; }
+        public double UnitPrice { get; set; }
+
+ /*       public ICollection<MaterialEstimate> MaterialEstimate { get; set; }*/
     }
 }

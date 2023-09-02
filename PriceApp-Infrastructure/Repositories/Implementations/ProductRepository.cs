@@ -2,11 +2,6 @@
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 using PriceApp_Infrastructure.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PriceApp_Infrastructure.Repositories.Implementations
 {
@@ -38,6 +33,36 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
 
    /*         return FindAll(track).Where(x =>
                 (x.ProductName.Contains(keyword, StringComparison.OrdinalIgnoreCase))).OrderBy(x => x.ProductName);*/
+        }
+
+        //Products with specific names
+
+        public Product GetPeg()
+        {
+            const string materialName = "Peg";
+            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
+            return material;
+        }
+
+        public Product GetProfile()
+        {
+            const string materialName = "Profile";
+            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
+            return material;
+        }
+
+        public Product GetLine()
+        {
+            const string materialName = "Line";
+            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
+            return material;
+        }
+
+        public Product GetNail()
+        {
+            const string materialName = "Nail";
+            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
+            return material;
         }
 
     }

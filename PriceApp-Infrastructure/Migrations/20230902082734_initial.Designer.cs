@@ -12,7 +12,7 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230823095427_initial")]
+    [Migration("20230902082734_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "765a04c0-078e-417a-b60e-15767c630be4",
+                            Id = "752b58ef-c36c-4a33-8315-c07749cee973",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "180fd1fb-3761-4355-888d-1d4d74a5d8a2",
+                            Id = "80e88ff5-ff9c-4a82-9d41-980daf9a2231",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -172,6 +172,81 @@ namespace PriceApp_Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Estimate");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.MaterialEstimate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EstimateId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UnitOfMeasurement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EstimateId");
+
+                    b.ToTable("MaterialEstimates");
+                });
+
             modelBuilder.Entity("PriceApp_Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -198,8 +273,8 @@ namespace PriceApp_Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -209,23 +284,59 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4770),
+                            CreatedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6428),
                             Description = "Sharp sand",
-                            ModifiedAt = new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4846),
+                            ModifiedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6488),
                             ProductName = "Sand",
                             UnitOfMeasurement = "Ton",
-                            UnitPrice = 500000m
+                            UnitPrice = 500000.0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4859),
+                            CreatedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6493),
                             Description = "Water proof",
-                            ModifiedAt = new DateTime(2023, 8, 23, 10, 54, 27, 532, DateTimeKind.Local).AddTicks(4860),
+                            ModifiedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6494),
                             ProductName = "Cement",
                             UnitOfMeasurement = "Bag",
-                            UnitPrice = 8000m
+                            UnitPrice = 8000.0
                         });
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>
@@ -287,6 +398,10 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -350,6 +465,50 @@ namespace PriceApp_Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
+                {
+                    b.HasOne("PriceApp_Domain.Entities.Project", null)
+                        .WithMany("Estimates")
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("PriceApp_Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.MaterialEstimate", b =>
+                {
+                    b.HasOne("PriceApp_Domain.Entities.Estimate", null)
+                        .WithMany("EstimatedItems")
+                        .HasForeignKey("EstimateId");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
+                {
+                    b.HasOne("PriceApp_Domain.Entities.User", null)
+                        .WithMany("Projects")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
+                {
+                    b.Navigation("EstimatedItems");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
+                {
+                    b.Navigation("Estimates");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }
