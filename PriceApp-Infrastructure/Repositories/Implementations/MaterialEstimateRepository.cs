@@ -21,6 +21,12 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
             _context = context;
         }
 
+        public async Task<MaterialEstimate> GetMEByUniqueProjectIdAndStage(int uniqueProjectId, string stage)
+        {
+            return await FindByCondition(x => x.UniqueProjectId == uniqueProjectId && x.Stage == stage, false).FirstOrDefaultAsync();
+        }
+
+
         //Material Estimate for specific products
 /*        public async Task<MaterialEstimateResponseDto> PegME(double buidingSetbackPermeter, string stage)
         {

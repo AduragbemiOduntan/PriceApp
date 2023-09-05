@@ -7,8 +7,9 @@ namespace PriceApp_Application.Services.Interfaces
     public interface IMaterialEstimateService
     {
         //Material Estimate for specific products
-        Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService(double buidingSetbackPermeter, string stage);
-
+        Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService(double buidingSetbackPermeter, string stage, int uniqueProjectId);
+        Task<StandardResponse<MaterialEstimateResponseDto>> GetMEByUniqueProjectIdAndStageAsync(int uniqueProjectId, string stage);
+        Task<StandardResponse<ICollection<MaterialEstimateResponseDto>>> GetAllMaterialEstimateAsync();
         // General
 
     }

@@ -17,6 +17,7 @@ namespace PriceApp_Domain.Dtos.Responses
         public string? Password { get; init; }
         public string? Email { get; init; }
         public string? PhoneNumber { get; init; }
+        public string UserType { get; set; }
         public ICollection<string>? Roles { get; init; }
     }
 }

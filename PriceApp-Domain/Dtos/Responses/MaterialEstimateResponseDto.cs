@@ -18,5 +18,6 @@ namespace PriceApp_Domain.Dtos.Responses
         public double TotalPrice { get; set; }
 
         public string Stage { get; set; }
+        public int UniqueProjectId { get; set; }
     }
 }

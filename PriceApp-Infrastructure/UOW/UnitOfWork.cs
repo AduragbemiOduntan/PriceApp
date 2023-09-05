@@ -15,8 +15,9 @@ namespace PriceApp_Infrastructure.UOW
         private readonly DataBaseContext _context;
         private IProductRepository _productRepository;
         private IUserRepository _userRepository;
-        private IMaterialEstimateRepository _estimateItemRepository;
+        private IMaterialEstimateRepository _materialEstimateRepository;
         private ISettingOutStageRepository _settingOutRepository;
+        private IEscavationRepository _escavationRepository;
 
         public UnitOfWork(DataBaseContext context)
         {
@@ -42,16 +43,16 @@ namespace PriceApp_Infrastructure.UOW
                 return _userRepository;
             }
         }
-/*
-        public IMaterialEstimateRepository EstimateItem
+
+        public IMaterialEstimateRepository MaterialEstimate
         {
             get
             {
-                if (_estimateItemRepository == null)
-                    _estimateItemRepository = new MaterialEstimateRepository(_context);
-                return _estimateItemRepository;
+                if(_materialEstimateRepository == null)
+                    _materialEstimateRepository = new MaterialEstimateRepository(_context);
+                return _materialEstimateRepository;
             }
-        }*/
+        }
 
         public ISettingOutStageRepository SettingOut
         {
@@ -63,15 +64,16 @@ namespace PriceApp_Infrastructure.UOW
             }
         }
 
-        public IMaterialEstimateRepository MaterialEstimate
+        public IEscavationRepository Escavation
         {
             get
             {
-                if (_estimateItemRepository == null)
-                    _estimateItemRepository = new MaterialEstimateRepository(_context);
-                return _estimateItemRepository;
+                if(_escavationRepository == null)
+                    _escavationRepository = new EscavationRepository(_context); 
+                return _escavationRepository;
             }
         }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

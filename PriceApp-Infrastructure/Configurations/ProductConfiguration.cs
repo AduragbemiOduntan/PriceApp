@@ -19,17 +19,25 @@ namespace PriceApp_Infrastructure.Configurations
                     Id = 1,
                     ProductName = "Sand",
                     Description = "Sharp sand",
-                    UnitOfMeasurement = "Ton",
+                    UnitOfMeasurement = "Tonnage",
                     UnitPrice = 500000
                 },
                 new Product
                 {
-                    Id= 2,
+                    Id = 2,
                     ProductName = "Cement",
                     Description = "Water proof",
                     UnitOfMeasurement = "Bag",
                     UnitPrice = 8000
                 }
+     /*            new Product
+                 {
+                     Id = 2,
+                     ProductName = "Peg",
+                     Description = "For building setting-out",
+                     UnitOfMeasurement = "Tonnage",
+                     UnitPrice = 2500
+                 }*/
             );
         }
     }

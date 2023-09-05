@@ -12,8 +12,8 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230902082734_initial")]
-    partial class initial
+    [Migration("20230904085145_newupdate")]
+    partial class newupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "752b58ef-c36c-4a33-8315-c07749cee973",
+                            Id = "f6b3b549-5d6e-4bd1-8699-6bc1c3ca8192",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "80e88ff5-ff9c-4a82-9d41-980daf9a2231",
+                            Id = "af955ebb-d6ff-477b-879b-1dec0829627b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -223,8 +223,14 @@ namespace PriceApp_Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
+
+                    b.Property<int?>("SettingOutStageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Stage")
                         .IsRequired()
@@ -232,6 +238,9 @@ namespace PriceApp_Infrastructure.Migrations
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
+
+                    b.Property<int>("UniqueProjectId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UnitOfMeasurement")
                         .IsRequired()
@@ -243,6 +252,10 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EstimateId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SettingOutStageId");
 
                     b.ToTable("MaterialEstimates");
                 });
@@ -284,9 +297,9 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6428),
+                            CreatedAt = new DateTime(2023, 9, 4, 9, 51, 44, 873, DateTimeKind.Local).AddTicks(4831),
                             Description = "Sharp sand",
-                            ModifiedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6488),
+                            ModifiedAt = new DateTime(2023, 9, 4, 9, 51, 44, 873, DateTimeKind.Local).AddTicks(4895),
                             ProductName = "Sand",
                             UnitOfMeasurement = "Ton",
                             UnitPrice = 500000.0
@@ -294,9 +307,9 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6493),
+                            CreatedAt = new DateTime(2023, 9, 4, 9, 51, 44, 873, DateTimeKind.Local).AddTicks(4901),
                             Description = "Water proof",
-                            ModifiedAt = new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6494),
+                            ModifiedAt = new DateTime(2023, 9, 4, 9, 51, 44, 873, DateTimeKind.Local).AddTicks(4902),
                             ProductName = "Cement",
                             UnitOfMeasurement = "Bag",
                             UnitPrice = 8000.0
@@ -337,6 +350,46 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Project");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.SettingOutStage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("BuidingSetbackPermeter")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("LineDerivedEstimatedCost")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("NailDerivedEstimatedCost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("PegDerivedEstimatedCost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ProfileDerivedEstimatedCost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalCostEstimate")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UniqueProjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SettingOuts");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>
@@ -487,6 +540,14 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasOne("PriceApp_Domain.Entities.Estimate", null)
                         .WithMany("EstimatedItems")
                         .HasForeignKey("EstimateId");
+
+                    b.HasOne("PriceApp_Domain.Entities.Product", null)
+                        .WithMany("MaterialEstimate")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("PriceApp_Domain.Entities.SettingOutStage", null)
+                        .WithMany("MaterialEstimates")
+                        .HasForeignKey("SettingOutStageId");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
@@ -501,9 +562,19 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Navigation("EstimatedItems");
                 });
 
+            modelBuilder.Entity("PriceApp_Domain.Entities.Product", b =>
+                {
+                    b.Navigation("MaterialEstimate");
+                });
+
             modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
                 {
                     b.Navigation("Estimates");
+                });
+
+            modelBuilder.Entity("PriceApp_Domain.Entities.SettingOutStage", b =>
+                {
+                    b.Navigation("MaterialEstimates");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>

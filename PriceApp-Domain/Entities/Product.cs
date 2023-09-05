@@ -16,6 +16,6 @@ namespace PriceApp_Domain.Entities
         public string UnitOfMeasurement { get; set; }
         public double UnitPrice { get; set; }
 
- /*       public ICollection<MaterialEstimate> MaterialEstimate { get; set; }*/
+        public ICollection<MaterialEstimate> MaterialEstimate { get; set; }
     }
 }

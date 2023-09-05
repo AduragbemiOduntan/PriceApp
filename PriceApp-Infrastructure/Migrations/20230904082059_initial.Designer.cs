@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 
@@ -11,9 +12,11 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230904082059_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7132924f-93d4-42b3-adf9-58bd5d69db4b",
+                            Id = "80a7ac5c-71b4-4624-951e-b46c140b21cf",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "4d5495c9-0688-4777-9caf-4897f78a7d68",
+                            Id = "b6ecde71-89a7-4498-ae93-2acb1a181f34",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -169,37 +172,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PriceApp_Domain.Entities.Escavation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Girth")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("PricePerMeter")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("uniqueProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Escavations");
-                });
-
             modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
                 {
                     b.Property<int>("Id")
@@ -257,9 +229,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<int?>("SettingOutStageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Stage")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -282,8 +251,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasIndex("EstimateId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("SettingOutStageId");
 
                     b.ToTable("MaterialEstimates");
                 });
@@ -325,19 +292,19 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 9, 4, 11, 7, 54, 370, DateTimeKind.Local).AddTicks(4728),
+                            CreatedAt = new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5798),
                             Description = "Sharp sand",
-                            ModifiedAt = new DateTime(2023, 9, 4, 11, 7, 54, 370, DateTimeKind.Local).AddTicks(4802),
+                            ModifiedAt = new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5863),
                             ProductName = "Sand",
-                            UnitOfMeasurement = "Tonnage",
+                            UnitOfMeasurement = "Ton",
                             UnitPrice = 500000.0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 9, 4, 11, 7, 54, 370, DateTimeKind.Local).AddTicks(4815),
+                            CreatedAt = new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5873),
                             Description = "Water proof",
-                            ModifiedAt = new DateTime(2023, 9, 4, 11, 7, 54, 370, DateTimeKind.Local).AddTicks(4818),
+                            ModifiedAt = new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5875),
                             ProductName = "Cement",
                             UnitOfMeasurement = "Bag",
                             UnitPrice = 8000.0
@@ -378,46 +345,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Project");
-                });
-
-            modelBuilder.Entity("PriceApp_Domain.Entities.SettingOutStage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("BuidingSetbackPermeter")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("LineDerivedEstimatedCost")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("NailDerivedEstimatedCost")
-                        .HasColumnType("float");
-
-                    b.Property<double>("PegDerivedEstimatedCost")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ProfileDerivedEstimatedCost")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalCostEstimate")
-                        .HasColumnType("float");
-
-                    b.Property<int>("UniqueProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SettingOuts");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>
@@ -572,10 +499,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasOne("PriceApp_Domain.Entities.Product", null)
                         .WithMany("MaterialEstimate")
                         .HasForeignKey("ProductId");
-
-                    b.HasOne("PriceApp_Domain.Entities.SettingOutStage", null)
-                        .WithMany("MaterialEstimates")
-                        .HasForeignKey("SettingOutStageId");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
@@ -598,11 +521,6 @@ namespace PriceApp_Infrastructure.Migrations
             modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
                 {
                     b.Navigation("Estimates");
-                });
-
-            modelBuilder.Entity("PriceApp_Domain.Entities.SettingOutStage", b =>
-                {
-                    b.Navigation("MaterialEstimates");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>

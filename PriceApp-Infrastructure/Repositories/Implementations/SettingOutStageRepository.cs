@@ -18,13 +18,10 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
             _context = context;
         }
 
-
-
-
-/*        public async Task<SettingOut> GetSettingOutByProjectId(int projectId, bool trackChanges)
+        public async Task<SettingOutStage> GetSettingOutByUniqueProjectId(int uniqueProjectId)
         {
-            return await FindByCondition(x => x.ProjectId == projectId, trackChanges).FirstOrDefaultAsync();
-        }*/
+            return await FindByCondition(x => x.UniqueProjectId == uniqueProjectId, false).FirstOrDefaultAsync();
+        }
 
 
     }

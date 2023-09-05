@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Infrastructure.Repositories.Interfaces
 {
-    public interface ISettingOutStageRepository : IRepositoryBase<SettingOutStage>
+    public interface IEscavationRepository : IRepositoryBase<Escavation>
     {
-        Task<SettingOutStage> GetSettingOutByUniqueProjectId(int uniqueProjectId);
-
     }
 }

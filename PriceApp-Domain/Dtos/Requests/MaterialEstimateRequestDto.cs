@@ -17,5 +17,6 @@ namespace PriceApp_Domain.Dtos.Requests
         public double TotalPrice { get; set; }
 
         public string Stage { get; set; }
+        public int UniqueProjectId { get; set; }
     }
 }

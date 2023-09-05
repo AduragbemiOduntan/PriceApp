@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PriceApp_Application.Services.Interfaces;
-using PriceApp_Domain.Dtos.Requests;
 
 namespace PriceApp_API.Controllers
 {
@@ -17,9 +15,23 @@ namespace PriceApp_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePegME(double buidingSetbackPermeter, string stage)
+        public async Task<IActionResult> CreatePegME(double buidingSetbackPermeter, string stage, int uniqueProjectId)
         {
-            var result = await _materialEstimateService.CreatePegMEService( buidingSetbackPermeter, stage);
+            var result = await _materialEstimateService.CreatePegMEService( buidingSetbackPermeter, stage, uniqueProjectId);
+            return Ok(result);
+        }
+
+        [HttpGet("UniqueId")]
+        public async Task<IActionResult> GetMEByUPIdAndStage(int uniqueProjectId, string stage)
+        {
+            var result = await _materialEstimateService.GetMEByUniqueProjectIdAndStageAsync(uniqueProjectId, stage);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllMaterialEstimate()
+        {
+            var result = await _materialEstimateService.GetAllMaterialEstimateAsync();
             return Ok(result);
         }
     }

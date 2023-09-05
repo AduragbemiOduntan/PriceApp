@@ -14,6 +14,7 @@ namespace PriceApp_Infrastructure.UOW
         IUserRepository User { get; }
         IMaterialEstimateRepository MaterialEstimate { get; }
         ISettingOutStageRepository SettingOut { get; }
+        IEscavationRepository Escavation { get; }
         Task SaveAsync();
     }
 }

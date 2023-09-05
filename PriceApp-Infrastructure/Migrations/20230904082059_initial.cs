@@ -241,7 +241,9 @@ namespace PriceApp_Infrastructure.Migrations
                     Quantity = table.Column<double>(type: "float", nullable: false),
                     TotalPrice = table.Column<double>(type: "float", nullable: false),
                     Stage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UniqueProjectId = table.Column<int>(type: "int", nullable: false),
                     EstimateId = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -253,6 +255,11 @@ namespace PriceApp_Infrastructure.Migrations
                         column: x => x.EstimateId,
                         principalTable: "Estimate",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MaterialEstimates_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -260,8 +267,8 @@ namespace PriceApp_Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "752b58ef-c36c-4a33-8315-c07749cee973", null, "User", "USER" },
-                    { "80e88ff5-ff9c-4a82-9d41-980daf9a2231", null, "Admin", "ADMIN" }
+                    { "80a7ac5c-71b4-4624-951e-b46c140b21cf", null, "User", "USER" },
+                    { "b6ecde71-89a7-4498-ae93-2acb1a181f34", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -269,8 +276,8 @@ namespace PriceApp_Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "ModifiedAt", "ProductName", "UnitOfMeasurement", "UnitPrice" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6428), "Sharp sand", new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6488), "Sand", "Ton", 500000.0 },
-                    { 2, new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6493), "Water proof", new DateTime(2023, 9, 2, 9, 27, 34, 627, DateTimeKind.Local).AddTicks(6494), "Cement", "Bag", 8000.0 }
+                    { 1, new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5798), "Sharp sand", new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5863), "Sand", "Ton", 500000.0 },
+                    { 2, new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5873), "Water proof", new DateTime(2023, 9, 4, 9, 20, 58, 890, DateTimeKind.Local).AddTicks(5875), "Cement", "Bag", 8000.0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -328,6 +335,11 @@ namespace PriceApp_Infrastructure.Migrations
                 column: "EstimateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MaterialEstimates_ProductId",
+                table: "MaterialEstimates",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Project_UserId",
                 table: "Project",
                 column: "UserId");
@@ -355,13 +367,13 @@ namespace PriceApp_Infrastructure.Migrations
                 name: "MaterialEstimates");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Estimate");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Project");

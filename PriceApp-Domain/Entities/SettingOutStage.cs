@@ -9,10 +9,7 @@ namespace PriceApp_Domain.Entities
 {
     public class SettingOutStage : BaseEntity
     {
-        [ForeignKey(nameof(MaterialEstimate))]
-        public int MaterialEstimateId { get; set; }
-        public MaterialEstimate Peg { get; set; }
-
+        public double PegDerivedEstimatedCost { get; set; }
         public double ProfileDerivedEstimatedCost { get; set; }
         public double LineDerivedEstimatedCost { get; set; }
         public double NailDerivedEstimatedCost { get; set; }
@@ -20,7 +17,11 @@ namespace PriceApp_Domain.Entities
 
         public double TotalCostEstimate { get; set; }
         public int UniqueProjectId { get; set; }
-        /*public ICollection<MaterialEstimate> MaterialEstimates { get; set; }*/
+
+        /*       [ForeignKey(nameof(MaterialEstimate))]
+               public int MaterialEstimateId { get; set; }
+               public MaterialEstimate Peg { get; set; }*/
+        public ICollection<MaterialEstimate> MaterialEstimates { get; set; }
         /*
                 [ForeignKey(nameof(Project))]
                 public int ProjectId { get; set; }

@@ -29,8 +29,11 @@ namespace PriceApp_Application.Common
             CreateMap<MaterialEstimateRequestDto, MaterialEstimate>();
             CreateMap<MaterialEstimate, MaterialEstimateResponseDto>();
 
-         /*   CreateMap<SettingOutStageRequestDto, SettingOutStage>();
-            CreateMap<SettingOutStage, SettingOutStageResponseDto>();*/
+            CreateMap<SettingOutStageRequestDto, SettingOutStage>();
+            CreateMap<SettingOutStage, SettingOutStageResponseDto>();
+
+            CreateMap<EscavationRequestDto, Escavation>();
+            CreateMap<Escavation, EscavationResponseDto>();
         }
     }
 }

@@ -22,12 +22,7 @@ namespace PriceApp_Application.Services.Implementation
             _mapper = mapper;
         }
 
-        /*      Task<MaterialEstimate> PegME(double buidingSetbackPermeter, string stage)
-              {
-                   _unitOfWork.Product.GetPeg();
-              }*/
-
-        public async Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService( double buidingSetbackPermeter, string stage)
+        public async Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService( double buidingSetbackPermeter, string stage, int uniqueProjectId)
         {
             var peg = _unitOfWork.Product.GetPeg();
             MaterialEstimateRequestDto materialEstimateRequest = new MaterialEstimateRequestDto();
@@ -53,17 +48,33 @@ namespace PriceApp_Application.Services.Implementation
             materialEstimateRequest.Quantity = numOfPegBundle;
             materialEstimateRequest.TotalPrice = pegBundleTotalCost;
             materialEstimateRequest.Stage = stage;
-
+            materialEstimateRequest.UniqueProjectId = uniqueProjectId;
             //Mapping
-            _logger.LogInformation($"Attemping to create a product {DateTime.Now}");
+            _logger.LogInformation($"Attemping to create material estimate {DateTime.Now}");
             var newPegEst = _mapper.Map<MaterialEstimate>(materialEstimateRequest);
             _unitOfWork.MaterialEstimate.Create(newPegEst);
             await _unitOfWork.SaveAsync();
             var productToReturn = _mapper.Map<MaterialEstimateResponseDto>(newPegEst);
-            return StandardResponse<MaterialEstimateResponseDto>.Success($"Product successfully created {newPegEst.Name}", productToReturn);
+            return StandardResponse<MaterialEstimateResponseDto>.Success($"Material estimate successfully created {newPegEst.Name}", productToReturn);
         }
 
+        public async Task<StandardResponse<MaterialEstimateResponseDto>> GetMEByUniqueProjectIdAndStageAsync(int uniqueProjectId, string stage)
+        {
+            _logger.LogInformation($"Attemping to get material estimate {DateTime.Now}");
+            
+            var materialEstimate = await _unitOfWork.MaterialEstimate.GetMEByUniqueProjectIdAndStage(uniqueProjectId, stage);
+            var materialEstimateToReturn = _mapper.Map<MaterialEstimateResponseDto>(materialEstimate);
+            return StandardResponse<MaterialEstimateResponseDto>.Success($"Material estimate successfully retrieved ", materialEstimateToReturn);
+        }
 
+        public async Task<StandardResponse<ICollection<MaterialEstimateResponseDto>>> GetAllMaterialEstimateAsync()
+        {
+            _logger.LogInformation($"Attemping to get all material estimate {DateTime.Now}");
+
+            var materialEstimates = _unitOfWork.MaterialEstimate.FindAll(false);
+            var materialEstimateToReturn = _mapper.Map<ICollection<MaterialEstimateResponseDto>>(materialEstimates);
+            return StandardResponse<ICollection<MaterialEstimateResponseDto>>.Success($"Material estimate successfully retrieved ", materialEstimateToReturn);
+        }
 
 
 
