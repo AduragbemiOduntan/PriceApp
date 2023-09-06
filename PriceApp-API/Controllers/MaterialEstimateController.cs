@@ -34,5 +34,12 @@ namespace PriceApp_API.Controllers
             var result = await _materialEstimateService.GetAllMaterialEstimateAsync();
             return Ok(result);
         }
+
+        [HttpPost("FoundationBaseCasting")]
+        public async Task<IActionResult> CreateFoundationBaseCasting(double girth)
+        {
+            var result = await _materialEstimateService.CreateFoundationBaseCastingAsync(girth);
+            return Ok(result);
+        }
     }
 }

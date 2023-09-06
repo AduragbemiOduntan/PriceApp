@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using PriceApp_Application.Services.Interfaces;
 using PriceApp_Domain.Dtos.Requests;
 using PriceApp_Domain.Dtos.Responses;
+using PriceApp_Domain.Dtos.Responses.stages;
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.UOW;
 
@@ -76,7 +77,84 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<ICollection<MaterialEstimateResponseDto>>.Success($"Material estimate successfully retrieved ", materialEstimateToReturn);
         }
 
+        //Foundation-Base-Casting section
+        public async Task<StandardResponse<FoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth)
+        {
+            var cement = await _unitOfWork.Product.FindProductByName("Cement", false);
+            var sand = await _unitOfWork.Product.FindProductByName("Sharp Sand 5 Ton Trip", false);
+            var granite = await _unitOfWork.Product.FindProductByName("3/4 Granite 5 Ton Trip", false);
+            var stage = "Foundation";
+            var Section = "Sub-structure";
+            var SubStage = "Foundation Base Casting";
+            var uniqueProjectId = 1;
 
+
+            const double escavatedTrenchWidth = 0.225;
+            const double foundationBaseHeight = 0.225;
+            const byte cementBagForOneVolumeOfConcreteMixture = 6;
+            const double bucketFactorOne = 0.9;
+            const double bucketFactorTwo = 1.4;
+
+
+            double volumeOfConcreteMixture = girth * escavatedTrenchWidth * foundationBaseHeight;
+            double totalSandTonnage = volumeOfConcreteMixture * bucketFactorOne * bucketFactorTwo;
+            double totalGraniteTonnage = totalSandTonnage * 2;
+            double totalBagsOfCement = volumeOfConcreteMixture * cementBagForOneVolumeOfConcreteMixture;
+
+            var foundationBaseCastingResponse = new FoundationBaseCastingResponseDto();
+            foundationBaseCastingResponse.Section = Section;
+            foundationBaseCastingResponse.Stage = stage;
+            foundationBaseCastingResponse.SubStage = SubStage;
+
+            //FBC is short for foundation base casting
+            //Cement
+            var cementForFBC = foundationBaseCastingResponse.CementDetails;
+            cementForFBC.Name = cement.ProductName;
+            cementForFBC.UnitOfMeasurement = cement.UnitOfMeasurement;
+            cementForFBC.UnitPrice = cement.UnitPrice;
+            cementForFBC.Quantity = totalBagsOfCement;
+            cementForFBC.TotalPrice = totalBagsOfCement * cement.UnitPrice;
+            cementForFBC.Stage = stage;
+            cementForFBC.UniqueProjectId = uniqueProjectId;
+            var createdCement = _mapper.Map<MaterialEstimate>(cementForFBC);
+            _unitOfWork.MaterialEstimate.Create(createdCement);
+            await _unitOfWork.SaveAsync();
+
+
+            //Sand
+            var sandForFBC = foundationBaseCastingResponse.SandDetails;
+            sandForFBC.Name = sand.ProductName;
+            sandForFBC.UnitOfMeasurement = sand.UnitOfMeasurement;
+            sandForFBC.UnitPrice = sand.UnitPrice;
+            sandForFBC.Quantity = totalSandTonnage;
+            sandForFBC.TotalPrice = totalSandTonnage * sand.UnitPrice; //look into the trailer tonnage
+            sandForFBC.Stage = stage;
+            sandForFBC.UniqueProjectId = uniqueProjectId;
+            var createdSand = _mapper.Map<MaterialEstimate>(sandForFBC);
+            _unitOfWork.MaterialEstimate.Create(createdSand);
+            await _unitOfWork.SaveAsync();
+
+            //granite
+            var graniteForFBC = foundationBaseCastingResponse.GraniteDetails;
+            graniteForFBC.Name = granite.ProductName;
+            graniteForFBC.UnitOfMeasurement= granite.UnitOfMeasurement;
+            graniteForFBC.UnitPrice = granite.UnitPrice;
+            graniteForFBC.Quantity = totalGraniteTonnage;
+            graniteForFBC.TotalPrice = totalGraniteTonnage * granite.UnitPrice;
+            graniteForFBC.Stage = stage;
+            graniteForFBC.UniqueProjectId = uniqueProjectId;
+            var createdGranite = _mapper.Map<MaterialEstimate>(graniteForFBC);
+            _unitOfWork.MaterialEstimate.Create(createdGranite);
+            await _unitOfWork.SaveAsync();
+
+            foundationBaseCastingResponse.OverallTotalPrice = cementForFBC.TotalPrice + sandForFBC.TotalPrice + graniteForFBC.TotalPrice;
+
+            var foundationBC = _mapper.Map<FoundationBaseCastingResponseDto>(foundationBaseCastingResponse);
+
+            //Look into creating each material on material table
+
+            return StandardResponse<FoundationBaseCastingResponseDto>.Success($"Foundation base casting successfully created", foundationBaseCastingResponse);
+        }
 
 
 

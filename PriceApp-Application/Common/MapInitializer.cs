@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PriceApp_Domain.Dtos.Requests;
 using PriceApp_Domain.Dtos.Responses;
+using PriceApp_Domain.Dtos.Responses.materials;
+using PriceApp_Domain.Dtos.Responses.stages;
 using PriceApp_Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -34,6 +36,12 @@ namespace PriceApp_Application.Common
 
             CreateMap<EscavationRequestDto, Escavation>();
             CreateMap<Escavation, EscavationResponseDto>();
+
+            CreateMap<FoundationBaseCastingRequestDto, FoundationBaseCastingResponseDto>();
+
+            CreateMap<SandDto, MaterialEstimate>();
+            CreateMap<CementDto, MaterialEstimate>();
+            CreateMap<GraniteDto, MaterialEstimate>();
         }
     }
 }
