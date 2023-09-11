@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PriceApp_Application.Services.Implementation;
 using PriceApp_Application.Services.Interfaces;
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 using PriceApp_Infrastructure.UOW;
+using System.Text;
 
 namespace PriceApp_API.Extensions
 {
@@ -38,9 +41,34 @@ namespace PriceApp_API.Extensions
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequiredLength = 8;
                 o.User.RequireUniqueEmail = true;
+                o. SignIn.RequireConfirmedEmail = true;
             })
             .AddEntityFrameworkStores<DataBaseContext>()
             .AddDefaultTokenProviders();
+        }
+
+        public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSettings = configuration.GetSection("JwtSettings");
+            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                };
+            });
         }
     }
 }

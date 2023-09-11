@@ -37,7 +37,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-/*        [HttpDelete]
+        [HttpDelete]
         public async Task<IActionResult> DeleteUserById(string id, bool trackChanges)
         {
             var result = await _userService.DeleteUserByIdAsync(id, trackChanges);
@@ -49,6 +49,6 @@ namespace PriceApp_API.Controllers
         {
             var result = await _userService.DeleteUserByEmailAsync(email, trackChanges);
             return Ok(result);
-        }*/
+        }
     }
 }

@@ -13,6 +13,9 @@ namespace PriceApp_Application.Services.Interfaces
     {
         /*    Task<IdentityResult> RegisterAsync(UserRequestDto userRequest);*/
         Task<StandardResponse<IdentityResult>> RegisterAsync(UserRequestDto userRequest);
-        Task<IdentityResult> LoginAsync(UserLoginRequestDto userLoginRequest);
+        Task<bool> ValidateUser(LoginRequestDto loginRequest);
+        Task<string> CreateToken();
+        Task<StandardResponse<string>> LoginUser(LoginRequestDto loginRequest);
+        Task<string> ConfirmEmail(string token, string email);
     }
 }
