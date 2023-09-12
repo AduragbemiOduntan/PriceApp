@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Domain.Dtos.Responses.materials
 {
-    public class SandDto
+    public class SandDto : MaterialPriceQtyBaseClass
     {
-        public string Name { get; set; }
-        public string UnitOfMeasurement { get; set; }
-        public double UnitPrice { get; set; }
-        public double Quantity { get; set; }
-        public double TotalPrice { get; set; }
-        public string Stage { get; set; }
-        public int UniqueProjectId { get; set; }
+
     }
 }

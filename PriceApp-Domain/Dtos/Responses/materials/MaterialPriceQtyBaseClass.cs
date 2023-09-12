@@ -12,7 +12,7 @@ namespace PriceApp_Domain.Dtos.Responses.materials
         public string UnitOfMeasurement { get; set; }
         public double UnitPrice { get; set; }
         public double Quantity { get; set; }
-        public double TotalPrice { get; set; }
+        public double TotalCost { get; set; }
         public string Stage { get; set; }
         public int UniqueProjectId { get; set; }
     }

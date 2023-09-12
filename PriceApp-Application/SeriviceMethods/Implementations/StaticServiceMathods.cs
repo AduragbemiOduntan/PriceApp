@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PriceApp_Domain.Dtos.Responses;
 
 namespace PriceApp_Application.SeriviceMethods.Implementations
 {
@@ -20,5 +21,32 @@ namespace PriceApp_Application.SeriviceMethods.Implementations
                 return appPw;
             }
         }
+
+        public static double SandPercentInConcrete(double concreteMixtureVolume)
+        {
+            const double bucketFactorOne = 0.9;
+            const double bucketFactorTwo = 1.4;
+
+            double sandPercentInTon = concreteMixtureVolume * bucketFactorOne * bucketFactorTwo;
+            return sandPercentInTon;
+        }
+        public static double CementBagsInConcreteMixture(double concreteMixtureVolume)
+        {
+            const byte cementBagForOneVolumeOfConcreteMixture = 6;
+            double totalBagsOfCement = concreteMixtureVolume * cementBagForOneVolumeOfConcreteMixture;
+            return totalBagsOfCement;
+        }
+
+        
+/*        public static double GranitePercentInConcrete(double concreteMixtureVolume)
+        {
+            double sandPercentInTon = SandPercentInConcrete(concreteMixtureVolume);
+
+            double granitePercent = sandPercentInTon * 2;
+            return granitePercent;
+        }
+*/
+
+        
     }
 }

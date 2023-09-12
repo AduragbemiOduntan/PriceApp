@@ -12,11 +12,13 @@ namespace PriceApp_Domain.Dtos.Responses.stages
         public string Section { get; set; }
         public string Stage { get; set; }
         public string SubStage { get; set; }
-        public double TotalIronTonnage { get; set; }
-        public double OverallTotalPrice { get; set; }
+     
+        public double OverallTotalCost { get; set; }
         
         public IronY10 IronY10Details { get; set; }
         public IronY16 IronY16Details { get; set; }
+        public double TotalIronTonnage { get; set; }
+        public double WoodTotalCost { get; set; }
 
         public StripFoundationReinforcementResponseDto()
         {

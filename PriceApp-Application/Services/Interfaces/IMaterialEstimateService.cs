@@ -12,7 +12,12 @@ namespace PriceApp_Application.Services.Interfaces
         Task<StandardResponse<MaterialEstimateResponseDto>> GetMEByUniqueProjectIdAndStageAsync(int uniqueProjectId, string stage);
         Task<StandardResponse<ICollection<MaterialEstimateResponseDto>>> GetAllMaterialEstimateAsync();
         Task<StandardResponse<StripFoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth);
-        Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth);
+        Task<StandardResponse<StripFoundationColumAndReinforcementResponseDto>> CreateFoundationColumnAndReinforcementAsync(double girth);
+
+
+        // Thsi two are merged into CreateFoundationColumnAndReinforcement(double girth) service. 
+        /*        Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth);
+                Task<StandardResponse<StripFoundationColumAndReinforcementResponseDto>> CreateFoundationColumCasting(double girth);*/
         // General
 
     }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PriceApp_Application.Services.Interfaces;
+using PriceApp_Domain.Dtos.Responses.stages;
+using PriceApp_Domain.Dtos.Responses;
 
 namespace PriceApp_API.Controllers
 {
@@ -42,12 +44,27 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("foundationReinforcement")]
+        [HttpPost("foundationColumnCasting")]
+        public async Task<IActionResult> CreateFoundationColumnAndReinforcement(double girth)
+        {
+            var result = await _materialEstimateService.CreateFoundationColumnAndReinforcementAsync(girth);
+            return Ok(result);
+        }
+        
+
+
+/*        [HttpPost("foundationReinforcement")]
         public async Task<IActionResult> CreateFoundationReinforcement(double girth)
         {
             var result = await _materialEstimateService.CreateFoundationReinforcementAsync(girth);
             return Ok(result);
         }
+
+        [HttpPost("foundationColumnCasting")]
+        public async Task<IActionResult> CreateFoundationColumCasting(double girth)
+        {
+
+        }*/
     }
 
 }
