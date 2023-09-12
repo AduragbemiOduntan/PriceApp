@@ -37,11 +37,16 @@ namespace PriceApp_Application.Common
             CreateMap<EscavationRequestDto, Escavation>();
             CreateMap<Escavation, EscavationResponseDto>();
 
-            CreateMap<FoundationBaseCastingRequestDto, FoundationBaseCastingResponseDto>();
+            CreateMap<FoundationBaseCastingRequestDto, StripFoundationBaseCastingResponseDto>();
+            CreateMap<StripFoundationReinforcementResponseDto, StripFoundationReinforcementResponseDto>();
 
             CreateMap<SandDto, MaterialEstimate>();
             CreateMap<CementDto, MaterialEstimate>();
             CreateMap<GraniteDto, MaterialEstimate>();
+            CreateMap<IronY10,  MaterialEstimate>();
+            CreateMap<IronY12,  MaterialEstimate>();
+            CreateMap<IronY16, MaterialEstimate>();
+
         }
     }
 }

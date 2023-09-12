@@ -14,7 +14,7 @@ namespace PriceApp_Application.Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<MaterialEstimateService> _logger;
         private readonly IMapper _mapper;
- 
+
 
         public MaterialEstimateService(IUnitOfWork unitOfWork, ILogger<MaterialEstimateService> logger, IMapper mapper)
         {
@@ -23,7 +23,7 @@ namespace PriceApp_Application.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService( double buidingSetbackPermeter, string stage, int uniqueProjectId)
+        public async Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService(double buidingSetbackPermeter, string stage, int uniqueProjectId)
         {
             var peg = _unitOfWork.Product.GetPeg();
             MaterialEstimateRequestDto materialEstimateRequest = new MaterialEstimateRequestDto();
@@ -62,7 +62,7 @@ namespace PriceApp_Application.Services.Implementation
         public async Task<StandardResponse<MaterialEstimateResponseDto>> GetMEByUniqueProjectIdAndStageAsync(int uniqueProjectId, string stage)
         {
             _logger.LogInformation($"Attemping to get material estimate {DateTime.Now}");
-            
+
             var materialEstimate = await _unitOfWork.MaterialEstimate.GetMEByUniqueProjectIdAndStage(uniqueProjectId, stage);
             var materialEstimateToReturn = _mapper.Map<MaterialEstimateResponseDto>(materialEstimate);
             return StandardResponse<MaterialEstimateResponseDto>.Success($"Material estimate successfully retrieved ", materialEstimateToReturn);
@@ -78,14 +78,14 @@ namespace PriceApp_Application.Services.Implementation
         }
 
         //Foundation-Base-Casting section
-        public async Task<StandardResponse<FoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth)
+        public async Task<StandardResponse<StripFoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth)
         {
             var cement = await _unitOfWork.Product.FindProductByName("Cement", false);
             var sand = await _unitOfWork.Product.FindProductByName("Sharp Sand 5 Ton Trip", false);
             var granite = await _unitOfWork.Product.FindProductByName("3/4 Granite 5 Ton Trip", false);
             var stage = "Foundation";
-            var Section = "Sub-structure";
-            var SubStage = "Foundation Base Casting";
+            var section = "Sub-structure";
+            var subStage = "Foundation Base Casting";
             var uniqueProjectId = 1;
 
 
@@ -101,10 +101,10 @@ namespace PriceApp_Application.Services.Implementation
             double totalGraniteTonnage = totalSandTonnage * 2;
             double totalBagsOfCement = volumeOfConcreteMixture * cementBagForOneVolumeOfConcreteMixture;
 
-            var foundationBaseCastingResponse = new FoundationBaseCastingResponseDto();
-            foundationBaseCastingResponse.Section = Section;
+            var foundationBaseCastingResponse = new StripFoundationBaseCastingResponseDto();
+            foundationBaseCastingResponse.Section = section;
             foundationBaseCastingResponse.Stage = stage;
-            foundationBaseCastingResponse.SubStage = SubStage;
+            foundationBaseCastingResponse.SubStage = subStage;
 
             //FBC is short for foundation base casting
             //Cement
@@ -137,7 +137,7 @@ namespace PriceApp_Application.Services.Implementation
             //granite
             var graniteForFBC = foundationBaseCastingResponse.GraniteDetails;
             graniteForFBC.Name = granite.ProductName;
-            graniteForFBC.UnitOfMeasurement= granite.UnitOfMeasurement;
+            graniteForFBC.UnitOfMeasurement = granite.UnitOfMeasurement;
             graniteForFBC.UnitPrice = granite.UnitPrice;
             graniteForFBC.Quantity = totalGraniteTonnage;
             graniteForFBC.TotalPrice = totalGraniteTonnage * granite.UnitPrice;
@@ -149,17 +149,93 @@ namespace PriceApp_Application.Services.Implementation
 
             foundationBaseCastingResponse.OverallTotalPrice = cementForFBC.TotalPrice + sandForFBC.TotalPrice + graniteForFBC.TotalPrice;
 
-            var foundationBC = _mapper.Map<FoundationBaseCastingResponseDto>(foundationBaseCastingResponse);
+            var foundationBC = _mapper.Map<StripFoundationBaseCastingResponseDto>(foundationBaseCastingResponse);
 
             //Look into creating each material on material table
 
-            return StandardResponse<FoundationBaseCastingResponseDto>.Success($"Foundation base casting successfully created", foundationBaseCastingResponse);
+            return StandardResponse<StripFoundationBaseCastingResponseDto>.Success($"Foundation base casting successfully created", foundationBaseCastingResponse);
         }
 
+        //Material cost estimate for strip foundation reinforcement, including column.
+        public async Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth)
+        {
+            var ironY10 = await _unitOfWork.Product.FindProductByName("Iron Y10 High Yield Local", false);
+            var ironY16 = await _unitOfWork.Product.FindProductByName("Iron Y16 High Yield Local", false);
+            /* var granite = await _unitOfWork.Product.FindProductByName("3/4 Granite 5 Ton Trip", false);*/
+            var section = "Sub-structure";
+            var stage = "Foundation";
+            var subStage = "Foundation Reinforcement";
+            var uniqueProjectId = 1;
 
+            const double constantFactor = 0.15;
+            const double escavatedTrenchWidth = 0.225;
+            const double foundationBaseHeight = 0.225;
+            const double foundationHeight = 1.25;
 
+            //Look into this: olumeOfConcreteMixture same as vol. of foundation base of escavated area
+            double volumeOfConcreteMixture = girth * escavatedTrenchWidth * foundationBaseHeight * foundationHeight;
 
-        /*        public async Task<StandardResponse<MaterialEstimateResponseDto>> CreateMaterialEstimate(MaterialEstimateRequestDto materialEstimateRequest, double buildinSetbackPerimeter)
+            double totalIronTonnage = volumeOfConcreteMixture * constantFactor;
+            double ironTonnageY10 = ((20 * totalIronTonnage) / 100);
+            double ironTonnageY16 = totalIronTonnage - ironTonnageY10;
+
+            var foundationReignforcement = new StripFoundationReinforcementResponseDto();
+            foundationReignforcement.Stage = stage;
+            foundationReignforcement.Section = section;
+            foundationReignforcement.SubStage = subStage;
+            foundationReignforcement.TotalIronTonnage = totalIronTonnage;
+
+            //FCR == foundation column reinforcement
+            // Iron Y10
+            var ironY10FCR = foundationReignforcement.IronY10Details;
+            ironY10FCR.UniqueProjectId = uniqueProjectId;
+            ironY10FCR.Name = ironY10.ProductName;
+            ironY10FCR.Stage = stage;
+            ironY10FCR.UnitPrice = ironY10.UnitPrice;
+            ironY10FCR.UnitOfMeasurement = ironY10.UnitOfMeasurement;
+            ironY10FCR.Quantity = ironTonnageY10;
+            ironY10FCR.TotalPrice = ironTonnageY10 * ironY10.UnitPrice;
+            var ironY10Created = _mapper.Map<MaterialEstimate>(ironY10FCR);
+            _unitOfWork.MaterialEstimate.Create(ironY10Created);
+            await _unitOfWork.SaveAsync();
+
+            // Iron Y16
+            var ironY16FCR = foundationReignforcement.IronY16Details;
+            ironY16FCR.UniqueProjectId = uniqueProjectId;
+            ironY16FCR.Name = ironY16.ProductName;
+            ironY16FCR.Stage = stage;
+            ironY16FCR.UnitPrice = ironY16.UnitPrice;
+            ironY16FCR.UnitOfMeasurement = ironY16.UnitOfMeasurement;
+            ironY16FCR.Quantity = ironTonnageY16;
+            ironY16FCR.TotalPrice = ironTonnageY16 * ironY16.UnitPrice;
+            var ironY16Created = _mapper.Map<MaterialEstimate>(ironY16FCR);
+            _unitOfWork.MaterialEstimate.Create(ironY16Created);
+            await _unitOfWork.SaveAsync();
+
+            foundationReignforcement.OverallTotalPrice = ironY16FCR.TotalPrice + ironY16FCR.TotalPrice;
+            var foundationReignforcemnetCreated = _mapper.Map<StripFoundationReinforcementResponseDto>(foundationReignforcement);
+            return StandardResponse<StripFoundationReinforcementResponseDto>.Success($"Successful! {foundationReignforcement.SubStage} material cost eatimate created", foundationReignforcemnetCreated);
+
+        }
+
+        //Material cost estimate for foundation column concrete and wood work
+/*        public async Task<StandardResponse<StripFoundationColumCastingResponseDto>> CreateFoundationColumCasting(double girth)
+        {
+            var section = "Sub-structure";
+            var stage = "Foundation";
+            var subStage = "Foundation Column Casting";
+            var uniqueProjectId = 1;
+
+            const double width = 0.225;
+            const double length = 0.225;
+            const double foundationHeight = 1.25;
+
+            double numberOfColumn = girth / 3.0;
+            double volumeOfConceteMixture = numberOfColumn * width * length;
+        }
+*/
+
+        /*     public async Task<StandardResponse<MaterialEstimateResponseDto>> CreateMaterialEstimate(MaterialEstimateRequestDto materialEstimateRequest, double buildinSetbackPerimeter)
                 {
                     if (materialEstimateRequest == null)
                     {
@@ -187,32 +263,7 @@ namespace PriceApp_Application.Services.Implementation
                     return materialEstimate;
 
                 }
-
-                public Task<StandardResponse<EstimateItemResponseDto>> FoundationItemEstimate()
-                {
-
-                }
-                public Task<StandardResponse<MaterialEstimateResponseDto>> SettingOutItemEstimate(double buidingSetbackPermeter)
-                {
-                    //buidingSetbackPermeter and sectionDistance are in meter
-                    BuidingSetbackPermeter = buidingSetbackPermeter;
-                    const byte sectionDistance = 3;
-                    const byte pegPerSectionDistance = 5;
-                    const byte minPegPerBundle = 15;
-
-                    //BSP is buildingSetBackPerimeter
-
-                    //Calculation for total peg bundle
-                    var sectionDistanceInBSP = buidingSetbackPermeter / sectionDistance;
-                    var numOfPegInBSP = sectionDistanceInBSP * pegPerSectionDistance;
-                    var numOfPegBundle = numOfPegInBSP / minPegPerBundle;
-                    //Peg cost
-                    var coastOfPegBundle = _unitOfWork.EstimateItem.
-                            var pegCost = numOfPegBundle * ;
-
-                    //Calculation for total 
-
-                }
-            }*/
+*/
+  
     }
 }

@@ -11,7 +11,8 @@ namespace PriceApp_Application.Services.Interfaces
         Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService(double buidingSetbackPermeter, string stage, int uniqueProjectId);
         Task<StandardResponse<MaterialEstimateResponseDto>> GetMEByUniqueProjectIdAndStageAsync(int uniqueProjectId, string stage);
         Task<StandardResponse<ICollection<MaterialEstimateResponseDto>>> GetAllMaterialEstimateAsync();
-        Task<StandardResponse<FoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth);
+        Task<StandardResponse<StripFoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth);
+        Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth);
         // General
 
     }

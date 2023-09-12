@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Domain.Dtos.Responses.stages
 {
-    public class FoundationBaseCastingResponseDto
+    public class StripFoundationColumCastingResponseDto
     {
         public string Section { get; set; }
         public string Stage { get; set; }
@@ -18,7 +18,7 @@ namespace PriceApp_Domain.Dtos.Responses.stages
         public CementDto CementDetails { get; set; }
         public GraniteDto GraniteDetails { get; set; }
 
-        public FoundationBaseCastingResponseDto()
+        public StripFoundationColumCastingResponseDto()
         {
             SandDetails = new SandDto();
             CementDetails = new CementDto();
