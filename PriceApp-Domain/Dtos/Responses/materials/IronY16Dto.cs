@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Domain.Dtos.Responses.materials
 {
-    public class IronY10 : MaterialPriceQtyBaseClass
+    public class IronY16Dto : MaterialPriceQtyBaseClass
     {
     }
 }

@@ -13,7 +13,9 @@ namespace PriceApp_Application.Services.Interfaces
         Task<StandardResponse<ICollection<MaterialEstimateResponseDto>>> GetAllMaterialEstimateAsync();
         Task<StandardResponse<StripFoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth);
         Task<StandardResponse<StripFoundationColumAndReinforcementResponseDto>> CreateFoundationColumnAndReinforcementAsync(double girth);
-
+        Task<StandardResponse<StripFoundationBlockworkResponseDto>> CreateFoundationBlockWorkAsync(double girth);
+        Task<StandardResponse<StripFoundationBackfillingResponseDto>> CreateFoundationBackfillingAsync(double buildingLength, double buildingBreath);
+        Task<StandardResponse<GermanFloorDto>> CreateGermanFloorAsync(double buildingLength, double buildingBreath);
 
         // Thsi two are merged into CreateFoundationColumnAndReinforcement(double girth) service. 
         /*        Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth);

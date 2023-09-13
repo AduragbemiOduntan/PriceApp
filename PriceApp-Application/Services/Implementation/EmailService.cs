@@ -10,7 +10,7 @@ namespace PriceApp_Application.Services.Implementation
         public async Task CreateEmail(string recieverEmail, string subject, string messageBody)
         {
             var senderEmail = "priceapplication@gmail.com";
-            var appPW = StaticServiceMathods.GetAppPassword();
+            var appPW = StaticMethods.GetAppPassword();
 
             var emailClient = new SmtpClient("smtp.gmail.com", 587)
             {

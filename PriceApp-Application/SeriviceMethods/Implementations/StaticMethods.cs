@@ -9,7 +9,7 @@ using PriceApp_Domain.Dtos.Responses;
 
 namespace PriceApp_Application.SeriviceMethods.Implementations
 {
-    public static class StaticServiceMathods
+    public static class StaticMethods
     {
         public static string GetAppPassword()
         {
@@ -22,7 +22,7 @@ namespace PriceApp_Application.SeriviceMethods.Implementations
             }
         }
 
-        public static double SandPercentInConcrete(double concreteMixtureVolume)
+        public static double SandTonnageInConcrete(double concreteMixtureVolume)
         {
             const double bucketFactorOne = 0.9;
             const double bucketFactorTwo = 1.4;
@@ -37,16 +37,18 @@ namespace PriceApp_Application.SeriviceMethods.Implementations
             return totalBagsOfCement;
         }
 
-        
-/*        public static double GranitePercentInConcrete(double concreteMixtureVolume)
+        public static double GranitePercentInConcrete(double totalSandTonnageInConcreteMixture)
         {
-            double sandPercentInTon = SandPercentInConcrete(concreteMixtureVolume);
-
-            double granitePercent = sandPercentInTon * 2;
-            return granitePercent;
+            double granitePercentInTon = totalSandTonnageInConcreteMixture * 2;
+            return granitePercentInTon;
         }
-*/
 
-        
+        public static double IronTonnage(double concreteMixtureVolume)
+        {
+            double totalIronTonnage = concreteMixtureVolume * 2; 
+            return totalIronTonnage;
+        }
+
+
     }
 }

@@ -44,27 +44,35 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("foundationColumnCasting")]
+        [HttpPost("foundationColumnAndReinforcement")]
         public async Task<IActionResult> CreateFoundationColumnAndReinforcement(double girth)
         {
             var result = await _materialEstimateService.CreateFoundationColumnAndReinforcementAsync(girth);
             return Ok(result);
         }
-        
 
-
-/*        [HttpPost("foundationReinforcement")]
-        public async Task<IActionResult> CreateFoundationReinforcement(double girth)
+        [HttpPost("foundationBlockwork")]
+        public async Task<IActionResult> CreateFoundationBlockWorkA(double girth)
         {
-            var result = await _materialEstimateService.CreateFoundationReinforcementAsync(girth);
+            var result = await _materialEstimateService.CreateFoundationBlockWorkAsync(girth);
             return Ok(result);
         }
 
-        [HttpPost("foundationColumnCasting")]
-        public async Task<IActionResult> CreateFoundationColumCasting(double girth)
+        [HttpPost("foundationBackfilling")]
+        public async Task<IActionResult> CreateFoundationBackfilling(double buildingLength, double buildingBreath)
         {
+            var result = await _materialEstimateService.CreateFoundationBackfillingAsync(buildingLength, buildingBreath);
+            return Ok(result);
+        }
 
-        }*/
+        [HttpPost("germanFloor")]
+        public async Task<IActionResult> CreateGermanFloor(double buildingLength, double buildingBreath)
+        {
+            var result = await _materialEstimateService.CreateGermanFloorAsync(buildingLength, buildingBreath);
+            return Ok(result);
+        }
+
+
     }
 
 }

@@ -7,7 +7,6 @@ using PriceApp_Domain.Dtos.Responses;
 using PriceApp_Domain.Dtos.Responses.stages;
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.UOW;
-using static PriceApp_Domain.Dtos.Requests.FoundationBaseCastingRequestDto;
 
 namespace PriceApp_Application.Services.Implementation
 {
@@ -91,7 +90,7 @@ namespace PriceApp_Application.Services.Implementation
             var uniqueProjectId = 1;
 
 
-            const double escavatedTrenchWidth = 0.225;
+            const double escavatedTrenchWidth = 0.675;
             const double foundationBaseHeight = 0.225;
             const byte cementBagForOneVolumeOfConcreteMixture = 6;
             const double bucketFactorOne = 0.9;
@@ -162,7 +161,7 @@ namespace PriceApp_Application.Services.Implementation
         {
             var section = "Sub-structure";
             var stage = "Foundation";
-            var subStage = " Strip Foundation Column and Reinforcement";
+            var subStage = "Strip Foundation Column and Reinforcement";
             var uniqueProjectId = 1;
 
             var cement = await _unitOfWork.Product.FindProductByName("Cement", false);
@@ -172,25 +171,26 @@ namespace PriceApp_Application.Services.Implementation
             var ironY16 = await _unitOfWork.Product.FindProductByName("Iron Y16 High Yield Local", false);
 
 
-            const double width = 0.225;
-            const double length = 0.225;
+            const double columnWidth = 0.225;
+            const double columnLength = 0.225;
             const double foundationHeight = 1.25;
             const double constantFactor = 0.15;
-         /*   const double escavatedTrenchWidth = 0.225;*/
-          /*  const double foundationBaseHeight = 0.225;*/
-          /*  const double foundationHeight = 1.25;*/
+            /*   const double escavatedTrenchWidth = 0.225;*/
+            /*  const double foundationBaseHeight = 0.225;*/
+            /*  const double foundationHeight = 1.25;*/
 
             double numberOfColumn = girth / 3.0;
-            double volumeOfConcreteMixture = numberOfColumn * width * length * foundationHeight;
+            double volumeOfOneColumnConcreteMixture = numberOfColumn * columnWidth * columnLength * foundationHeight;
+            double totalVolumeOfColumnConcreteMixture = volumeOfOneColumnConcreteMixture * numberOfColumn;
 
-            double totalSandTonnage = StaticServiceMathods.SandPercentInConcrete(volumeOfConcreteMixture);
+            double totalSandTonnage = StaticMethods.SandTonnageInConcrete(totalVolumeOfColumnConcreteMixture);
             double totalGraniteTonnage = totalSandTonnage * 2;
-            double totalBagsOfCement = StaticServiceMathods.CementBagsInConcreteMixture(volumeOfConcreteMixture);
+            double totalBagsOfCement = StaticMethods.CementBagsInConcreteMixture(totalVolumeOfColumnConcreteMixture);
 
             //Look into this: volumeOfConcreteMixture same as vol. of foundation base of escavated area
             /*  double volumeOfConcreteMixture = girth * escavatedTrenchWidth * foundationBaseHeight * foundationHeight;*/
 
-            double totalIronTonnage = volumeOfConcreteMixture * constantFactor;
+            double totalIronTonnage = totalVolumeOfColumnConcreteMixture * constantFactor;
             double ironTonnageY10 = ((20 * totalIronTonnage) / 100);
             double ironTonnageY16 = totalIronTonnage - ironTonnageY10;
 
@@ -241,7 +241,7 @@ namespace PriceApp_Application.Services.Implementation
             await _unitOfWork.SaveAsync();
 
             //Reinforcement
-       
+
 
             //FCR == foundation column reinforcement
             // Iron Y10
@@ -273,12 +273,212 @@ namespace PriceApp_Application.Services.Implementation
             foundationColumnAndReinforcementRequest.TotalIronTonnage = totalIronTonnage;
             foundationColumnAndReinforcementRequest.TotalIronCost = ironY10FCR.TotalCost + ironY16FCR.TotalCost;
             foundationColumnAndReinforcementRequest.OverallTotalCost = cementForFCC.TotalCost + graniteForFCC.TotalCost + sandForFCC.TotalCost + ironY16FCR.TotalCost + ironY16FCR.TotalCost;
-            foundationColumnAndReinforcementRequest.WoodTotalCost = foundationColumnAndReinforcementRequest.TotalIronCost  / 2;
+            foundationColumnAndReinforcementRequest.WoodTotalCost = foundationColumnAndReinforcementRequest.TotalIronCost / 2;
             foundationColumnAndReinforcementRequest.OverallTotalCost = cementForFCC.TotalCost + sandForFCC.TotalCost + graniteForFCC.TotalCost;
 
             var foundationCC = _mapper.Map<StripFoundationColumAndReinforcementResponseDto>(foundationColumnAndReinforcementRequest);
 
             return StandardResponse<StripFoundationColumAndReinforcementResponseDto>.Success($"Successful! {foundationColumnAndReinforcementRequest.SubStage} material cost estimate created", foundationCC);
+        }
+
+        public async Task<StandardResponse<StripFoundationBlockworkResponseDto>> CreateFoundationBlockWorkAsync(double girth)
+        {
+            var section = "Sub-structure";
+            var stage = "Foundation";
+            var subStage = "Strip Foundation Blockwork";
+            var uniqueProjectId = 1;
+
+            var cement = await _unitOfWork.Product.FindProductByName("Cement", false);
+            var sand = await _unitOfWork.Product.FindProductByName("Sharp Sand 5 Ton Trip", false);
+            var block = await _unitOfWork.Product.FindProductByName("9 Inches Block", false);
+
+            const double minimumFoundationHeight = 1.25;
+            const byte numberOfBlocksInOneSquareMeter = 11;
+            const byte numberOfBlocksToOneCementBag = 50;
+            const byte numberOfSandWheelBarrowToOneCementBag = 3;
+            const byte numberOfWheelBarrowInFiveTonnes = 35;
+
+            var squareMeterOfBlockwork = girth * minimumFoundationHeight;
+            var totalNumberOfBlock = squareMeterOfBlockwork * numberOfBlocksInOneSquareMeter;
+            var totalBagsOfCement = totalNumberOfBlock / numberOfBlocksToOneCementBag;
+            var totalSandWheelBarrow = totalBagsOfCement * numberOfSandWheelBarrowToOneCementBag;
+            double fiveTonnesSandTrip = totalSandWheelBarrow / numberOfWheelBarrowInFiveTonnes;
+            var totalSandInTonnes = fiveTonnesSandTrip * 5;
+
+            var foundationBlockworkRequest = new StripFoundationBlockworkResponseDto();
+            foundationBlockworkRequest.Section = section;
+            foundationBlockworkRequest.Stage = stage;
+            foundationBlockworkRequest.SubStage = subStage;
+
+            //Cement
+            var cementForBW = foundationBlockworkRequest.CementDetails;
+            cementForBW.Name = cement.ProductName;
+            cementForBW.UnitOfMeasurement = cement.UnitOfMeasurement;
+            cementForBW.UnitPrice = cement.UnitPrice;
+            cementForBW.Quantity = totalBagsOfCement;
+            cementForBW.TotalCost = totalBagsOfCement * cement.UnitPrice;
+            cementForBW.Stage = subStage; //remember to change others to substage
+            cementForBW.UniqueProjectId = uniqueProjectId;
+            var createdCement = _mapper.Map<MaterialEstimate>(cementForBW);
+            _unitOfWork.MaterialEstimate.Create(createdCement);
+            await _unitOfWork.SaveAsync();
+
+            //Sand
+            var sandForBW = foundationBlockworkRequest.SandDetails;
+            sandForBW.Name = sand.ProductName;
+            sandForBW.UnitOfMeasurement = sand.UnitOfMeasurement;
+            sandForBW.UnitPrice = sand.UnitPrice;
+            sandForBW.Quantity = totalSandInTonnes;
+            sandForBW.TotalCost = fiveTonnesSandTrip * sand.UnitPrice; //look into the trailer tonnage
+            sandForBW.Stage = subStage;
+            sandForBW.UniqueProjectId = uniqueProjectId;
+            var createdSand = _mapper.Map<MaterialEstimate>(sandForBW);
+            _unitOfWork.MaterialEstimate.Create(createdSand);
+            await _unitOfWork.SaveAsync();
+
+            //Block
+            var blockForBW = foundationBlockworkRequest.Block9InchesDetails;
+            blockForBW.Name = block.ProductName;
+            blockForBW.UnitOfMeasurement = block.UnitOfMeasurement;
+            blockForBW.UnitPrice = block.UnitPrice;
+            blockForBW.Quantity = totalNumberOfBlock;
+            blockForBW.TotalCost = totalNumberOfBlock * block.UnitPrice;
+            blockForBW.Stage = subStage;
+            blockForBW.UniqueProjectId = uniqueProjectId;
+            var createdBlock = _mapper.Map<MaterialEstimate>(blockForBW);
+            _unitOfWork.MaterialEstimate.Create(createdBlock);
+            await _unitOfWork.SaveAsync();
+
+            foundationBlockworkRequest.OverallTotalPrice = cementForBW.TotalCost + sandForBW.TotalCost + blockForBW.TotalCost;
+            var foundationBW = _mapper.Map<StripFoundationBlockworkResponseDto>(foundationBlockworkRequest);
+
+            return StandardResponse<StripFoundationBlockworkResponseDto>.Success($"Successful {foundationBlockworkRequest.SubStage} created.", foundationBW);
+        }
+
+        public async Task<StandardResponse<StripFoundationBackfillingResponseDto>> CreateFoundationBackfillingAsync(double buildingLength, double buildingBreath)
+        {
+            var section = "Sub-structure";
+            var stage = "Foundation";
+            var subStage = "Strip Foundation Backfilling";
+            var uniqueProjectId = 1;
+            //laterite == filling sand
+            var laterite = await _unitOfWork.Product.FindProductByName("Laterite", false);
+
+            const double minimumFoundationHeight = 1.25;
+            const double squareMeterEquivalentToFiveTonnes = 3.53;
+
+            double lateriteVolume = buildingLength * buildingBreath * minimumFoundationHeight;
+            double fiveTonnesSandTrip = lateriteVolume / squareMeterEquivalentToFiveTonnes;
+            double totalSandInTonnes = fiveTonnesSandTrip * 5;
+
+            var foundationBackfillingRequest = new StripFoundationBackfillingResponseDto();
+            foundationBackfillingRequest.Section = section;
+            foundationBackfillingRequest.Stage = stage;
+            foundationBackfillingRequest.SubStage = subStage;
+
+            var lateriteBF = foundationBackfillingRequest.LateriteDetails;
+            lateriteBF.Name = laterite.ProductName;
+            lateriteBF.UnitOfMeasurement = laterite.UnitOfMeasurement;
+            lateriteBF.UnitPrice = laterite.UnitPrice;
+            lateriteBF.Quantity = totalSandInTonnes;
+            lateriteBF.Stage = subStage;
+            lateriteBF.UniqueProjectId = uniqueProjectId;
+            lateriteBF.TotalCost = fiveTonnesSandTrip * laterite.UnitPrice;
+
+            var createdLaterite = _mapper.Map<MaterialEstimate>(lateriteBF);
+            _unitOfWork.MaterialEstimate.Create(createdLaterite);
+            await _unitOfWork.SaveAsync();
+
+            foundationBackfillingRequest.OverallTotalPrice = lateriteBF.TotalCost;
+            var foundationBF = _mapper.Map<StripFoundationBackfillingResponseDto>(foundationBackfillingRequest);
+
+            return StandardResponse<StripFoundationBackfillingResponseDto>.Success($"Successful {foundationBackfillingRequest.SubStage} created.", foundationBackfillingRequest);
+        }
+
+        public async Task<StandardResponse<GermanFloorDto>> CreateGermanFloorAsync(double buildingLength, double buildingBreath)
+        {
+            var section = "Sub-structure";
+            var stage = "Foundation";
+            var subStage = "German Floor";
+            var uniqueProjectId = 1;
+
+            var cement = await _unitOfWork.Product.FindProductByName("Cement", false);
+            var sand = await _unitOfWork.Product.FindProductByName("Sharp Sand 5 Ton Trip", false);
+            var granite = await _unitOfWork.Product.FindProductByName("3/4 Granite 5 Ton Trip", false);
+            var ironY12 = await _unitOfWork.Product.FindProductByName("Iron Y12 High Yield Local", false);
+
+            const double floorThickness = 0.15;
+
+            double germanFloorVolume = buildingLength * buildingBreath * floorThickness;
+            double totalBagsOfCement = StaticMethods.CementBagsInConcreteMixture(germanFloorVolume);
+            double totalSandTonnage = StaticMethods.SandTonnageInConcrete(germanFloorVolume);
+            double fiveTonnesSandTrip = totalSandTonnage / 5;
+            double totalGraniteTonnage = StaticMethods.GranitePercentInConcrete(totalSandTonnage);
+            double fiveTonnesGraniteTrip = totalGraniteTonnage / 5;
+            double totalIronTonnage = StaticMethods.IronTonnage(germanFloorVolume);
+
+            var germanFloorRequest = new GermanFloorDto();
+
+            //Cement
+            var cementForGF = germanFloorRequest.CementDetails;
+            cementForGF.Name = cement.ProductName;
+            cementForGF.UnitOfMeasurement = cement.UnitOfMeasurement;
+            cementForGF.UnitPrice = cement.UnitPrice;
+            cementForGF.Quantity = totalBagsOfCement;
+            cementForGF.TotalCost = totalBagsOfCement * cement.UnitPrice;
+            cementForGF.Stage = subStage;
+            cementForGF.UniqueProjectId = uniqueProjectId;
+            var createdCement = _mapper.Map<MaterialEstimate>(cementForGF);
+            _unitOfWork.MaterialEstimate.Create(createdCement);
+            await _unitOfWork.SaveAsync();
+
+
+            //Sand
+            var sandForGF = germanFloorRequest.SandDetails;
+            sandForGF.Name = sand.ProductName;
+            sandForGF.UnitOfMeasurement = sand.UnitOfMeasurement;
+            sandForGF.UnitPrice = sand.UnitPrice;
+            sandForGF.Quantity = totalSandTonnage;
+            sandForGF.TotalCost = fiveTonnesSandTrip * sand.UnitPrice; //look into the trailer tonnage
+            sandForGF.Stage = subStage;
+            sandForGF.UniqueProjectId = uniqueProjectId;
+            var createdSand = _mapper.Map<MaterialEstimate>(sandForGF);
+            _unitOfWork.MaterialEstimate.Create(createdSand);
+            await _unitOfWork.SaveAsync();
+
+            //granite
+            var graniteForGF = germanFloorRequest.GraniteDetails;
+            graniteForGF.Name = granite.ProductName;
+            graniteForGF.UnitOfMeasurement = granite.UnitOfMeasurement;
+            graniteForGF.UnitPrice = granite.UnitPrice;
+            graniteForGF.Quantity = totalGraniteTonnage;
+            graniteForGF.TotalCost = fiveTonnesGraniteTrip * granite.UnitPrice;
+            graniteForGF.Stage = subStage;
+            graniteForGF.UniqueProjectId = uniqueProjectId;
+            var createdGranite = _mapper.Map<MaterialEstimate>(graniteForGF);
+            _unitOfWork.MaterialEstimate.Create(createdGranite);
+            await _unitOfWork.SaveAsync();
+
+            //Reinforcement
+
+            //GF == german floor.
+            // Iron Y12
+            var ironY12GF = germanFloorRequest.IronY12Details;
+            ironY12GF.Name = ironY12.ProductName;
+            ironY12GF.Name = ironY12.ProductName;
+            ironY12GF.Stage = subStage;
+            ironY12GF.UnitPrice = ironY12.UnitPrice;
+            ironY12GF.UnitOfMeasurement = ironY12.UnitOfMeasurement;
+            ironY12GF.Quantity = totalIronTonnage;
+            ironY12GF.TotalCost = totalIronTonnage * ironY12.UnitPrice;
+            var ironY10Created = _mapper.Map<MaterialEstimate>(ironY12GF);
+            _unitOfWork.MaterialEstimate.Create(ironY10Created);
+            await _unitOfWork.SaveAsync();
+
+            germanFloorRequest.OverallTotalPrice = sandForGF.TotalCost + cementForGF.TotalCost + graniteForGF.TotalCost + ironY12GF.TotalCost;
+            var foundationBF = _mapper.Map<GermanFloorDto>(germanFloorRequest);
+
+            return StandardResponse<GermanFloorDto>.Success($"Successful {germanFloorRequest.SubStage} created.", germanFloorRequest);
         }
 
         //Material cost estimate for strip foundation reinforcement, including column.
@@ -458,6 +658,6 @@ namespace PriceApp_Application.Services.Implementation
                     return materialEstimate;
 
                 }
-*/
+                */
     }
 }
