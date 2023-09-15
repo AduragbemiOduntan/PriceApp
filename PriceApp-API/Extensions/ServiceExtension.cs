@@ -21,7 +21,7 @@ namespace PriceApp_API.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMaterialEstimateService, MaterialEstimateService>();
             services.AddScoped<ISettingOutStageService, SettingOutStageService>();
-            services.AddScoped<IEscavationService, EscavationService>();
+            services.AddScoped<IExcavationService, ExcavationService>();
             services.AddScoped<IEmailService, EmailService>();
         }
 

@@ -16,6 +16,9 @@ namespace PriceApp_Application.Services.Interfaces
         Task<StandardResponse<StripFoundationBlockworkResponseDto>> CreateFoundationBlockWorkAsync(double girth);
         Task<StandardResponse<StripFoundationBackfillingResponseDto>> CreateFoundationBackfillingAsync(double buildingLength, double buildingBreath);
         Task<StandardResponse<GermanFloorDto>> CreateGermanFloorAsync(double buildingLength, double buildingBreath);
+        Task<StandardResponse<BuildingWallBlockworkDto>> CreateBuildingWallBlockWorkAsync(double girth, double buildingFloorHeight);
+        Task<StandardResponse<LintelDto>> CreateLintelAsync(double girth);
+        Task<StandardResponse<BuildingWallColumnDto>> CreateWallColumnAsync(double girth, double wallHeight);
 
         // Thsi two are merged into CreateFoundationColumnAndReinforcement(double girth) service. 
         /*        Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth);

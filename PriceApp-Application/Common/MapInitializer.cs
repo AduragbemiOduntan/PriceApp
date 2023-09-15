@@ -4,11 +4,6 @@ using PriceApp_Domain.Dtos.Responses;
 using PriceApp_Domain.Dtos.Responses.materials;
 using PriceApp_Domain.Dtos.Responses.stages;
 using PriceApp_Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PriceApp_Application.Common
 {
@@ -34,8 +29,8 @@ namespace PriceApp_Application.Common
             CreateMap<SettingOutStageRequestDto, SettingOutStage>();
             CreateMap<SettingOutStage, SettingOutStageResponseDto>();
 
-            CreateMap<EscavationRequestDto, Escavation>();
-            CreateMap<Escavation, EscavationResponseDto>();
+            CreateMap<ExcavationRequestDto, Excavation>();
+            CreateMap<Excavation, ExcavationResponseDto>();
 
             CreateMap<FoundationBaseCastingRequestDto, StripFoundationBaseCastingResponseDto>();
             CreateMap<StripFoundationColumAndReinforcementResponseDto, StripFoundationColumAndReinforcementResponseDto>();
@@ -44,16 +39,8 @@ namespace PriceApp_Application.Common
             CreateMap<GermanFloorDto,GermanFloorDto>();
 
            /* CreateMap<StripFoundationReinforcementResponseDto, StripFoundationReinforcementResponseDto>();*/
-
-            CreateMap<SandDto, MaterialEstimate>();
-            CreateMap<CementDto, MaterialEstimate>();
-            CreateMap<GraniteDto, MaterialEstimate>();
-            CreateMap<IronY10Dto,  MaterialEstimate>();
-            CreateMap<IronY12Dto,  MaterialEstimate>();
-            CreateMap<IronY16Dto, MaterialEstimate>();
-            CreateMap<LateriteDto, MaterialEstimate>();
-            CreateMap<Block9InchesDto, MaterialEstimate>();
-
+           CreateMap<Product, MaterialDto>();
+            CreateMap<MaterialDto, MaterialEstimate>();
         }
     }
 }

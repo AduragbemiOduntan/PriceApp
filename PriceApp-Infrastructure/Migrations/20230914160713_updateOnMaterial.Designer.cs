@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 
@@ -11,9 +12,11 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230914160713_updateOnMaterial")]
+    partial class updateOnMaterial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9aec9e4b-1823-4d95-a415-bd85cba56343",
+                            Id = "4d047d4c-26b3-4128-9786-1b1a28fd43b0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "18dab17b-ac4e-4e8f-8ee1-9bc1e556b871",
+                            Id = "fb5049f7-dabb-461f-bf31-f0a63040790e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -325,9 +328,9 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9246),
+                            CreatedAt = new DateTime(2023, 9, 14, 17, 7, 13, 368, DateTimeKind.Local).AddTicks(8583),
                             Description = "Sharp sand",
-                            ModifiedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9298),
+                            ModifiedAt = new DateTime(2023, 9, 14, 17, 7, 13, 368, DateTimeKind.Local).AddTicks(8631),
                             ProductName = "Sand",
                             UnitOfMeasurement = "Tonnage",
                             UnitPrice = 500000.0
@@ -335,9 +338,9 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9303),
+                            CreatedAt = new DateTime(2023, 9, 14, 17, 7, 13, 368, DateTimeKind.Local).AddTicks(8639),
                             Description = "Water proof",
-                            ModifiedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9304),
+                            ModifiedAt = new DateTime(2023, 9, 14, 17, 7, 13, 368, DateTimeKind.Local).AddTicks(8640),
                             ProductName = "Cement",
                             UnitOfMeasurement = "Bag",
                             UnitPrice = 8000.0

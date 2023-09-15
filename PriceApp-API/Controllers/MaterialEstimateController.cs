@@ -72,6 +72,28 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
+        [HttpPost("wallBlockWork")]
+        public async Task<IActionResult> CreateBuildingFloorWallWorkAsnc(double girth, double buildingFloorHeight)
+        {
+            var result = await _materialEstimateService.CreateBuildingWallBlockWorkAsync(girth, buildingFloorHeight);
+            return Ok(result);
+        }
+
+
+        [HttpPost("lintel")]
+        public async Task<IActionResult> CreateLintel(double girth)
+        {
+            var result = await _materialEstimateService.CreateLintelAsync(girth);
+            return Ok(result);
+
+        }
+
+        [HttpPost("wallColumn")]
+        public async Task<IActionResult> CreateWallColumn(double girth, double wallHeight)
+        {
+            var result = await _materialEstimateService.CreateWallColumnAsync(girth, wallHeight);
+            return Ok(result);
+        }
 
     }
 

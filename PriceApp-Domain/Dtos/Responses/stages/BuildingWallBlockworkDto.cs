@@ -2,20 +2,20 @@
 
 namespace PriceApp_Domain.Dtos.Responses.stages
 {
-    public class StripFoundationBaseCastingResponseDto
+    public class BuildingWallBlockworkDto
     {
-        public string Section { get; set; } = "Sub-structure";
+        public string Section { get; set; } = "Super-structure";
         public string Stage { get; set; }
         public MaterialDto SandDetails { get; set; }
         public MaterialDto CementDetails { get; set; }
-        public MaterialDto GraniteDetails { get; set; }
+        public MaterialDto Block9InchesDetails { get; set; }
         public double OverallTotalPrice { get; set; }
 
-        public StripFoundationBaseCastingResponseDto()
+        public BuildingWallBlockworkDto()
         {
             SandDetails = new MaterialDto();
             CementDetails = new MaterialDto();
-            GraniteDetails = new MaterialDto();
+            Block9InchesDetails = new MaterialDto();
         }
     }
 }

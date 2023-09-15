@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 
@@ -11,9 +12,11 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230914162120_anotherUpdate")]
+    partial class anotherUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9aec9e4b-1823-4d95-a415-bd85cba56343",
+                            Id = "ffb0bf21-3565-4dca-892a-1e529deca1ee",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "18dab17b-ac4e-4e8f-8ee1-9bc1e556b871",
+                            Id = "b1cece48-e0d6-420f-9f34-9867405fb44b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -261,7 +264,6 @@ namespace PriceApp_Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Stage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TotalPrice")
@@ -325,9 +327,9 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9246),
+                            CreatedAt = new DateTime(2023, 9, 14, 17, 21, 20, 107, DateTimeKind.Local).AddTicks(6264),
                             Description = "Sharp sand",
-                            ModifiedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9298),
+                            ModifiedAt = new DateTime(2023, 9, 14, 17, 21, 20, 107, DateTimeKind.Local).AddTicks(6328),
                             ProductName = "Sand",
                             UnitOfMeasurement = "Tonnage",
                             UnitPrice = 500000.0
@@ -335,9 +337,9 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9303),
+                            CreatedAt = new DateTime(2023, 9, 14, 17, 21, 20, 107, DateTimeKind.Local).AddTicks(6336),
                             Description = "Water proof",
-                            ModifiedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9304),
+                            ModifiedAt = new DateTime(2023, 9, 14, 17, 21, 20, 107, DateTimeKind.Local).AddTicks(6338),
                             ProductName = "Cement",
                             UnitOfMeasurement = "Bag",
                             UnitPrice = 8000.0

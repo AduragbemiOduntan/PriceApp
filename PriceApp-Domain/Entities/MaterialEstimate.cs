@@ -2,7 +2,7 @@
 {
     public class MaterialEstimate : BaseEntity
     {
-        public string Name { get; set; }
+        public string ProductName { get; set; }
         public string UnitOfMeasurement { get; set; }
         public double UnitPrice { get; set; }
         public double Quantity { get; set; }

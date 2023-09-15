@@ -17,7 +17,7 @@ namespace PriceApp_Infrastructure.UOW
         private IUserRepository _userRepository;
         private IMaterialEstimateRepository _materialEstimateRepository;
         private ISettingOutStageRepository _settingOutRepository;
-        private IEscavationRepository _escavationRepository;
+        private IExcavationRepository _excavationRepository;
 
         public UnitOfWork(DataBaseContext context)
         {
@@ -64,13 +64,13 @@ namespace PriceApp_Infrastructure.UOW
             }
         }
 
-        public IEscavationRepository Escavation
+        public IExcavationRepository Excavation
         {
             get
             {
-                if(_escavationRepository == null)
-                    _escavationRepository = new EscavationRepository(_context); 
-                return _escavationRepository;
+                if(_excavationRepository == null)
+                    _excavationRepository = new ExcavationRepository(_context); 
+                return _excavationRepository;
             }
         }
 

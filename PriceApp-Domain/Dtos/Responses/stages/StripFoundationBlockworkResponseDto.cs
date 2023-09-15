@@ -1,27 +1,21 @@
 ﻿using PriceApp_Domain.Dtos.Responses.materials;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PriceApp_Domain.Dtos.Responses.stages
 {
     public class StripFoundationBlockworkResponseDto
     {
-        public string Section { get; set; }
+        public string Section { get; set; } = "Sub-structure";
         public string Stage { get; set; }
-        public string SubStage { get; set; }
+        public MaterialDto SandDetails { get; set; }
+        public MaterialDto CementDetails { get; set; }
+        public MaterialDto Block9InchesDetails { get; set; }
         public double OverallTotalPrice { get; set; }
-        public SandDto SandDetails { get; set; }
-        public CementDto CementDetails { get; set; }
-        public Block9InchesDto Block9InchesDetails { get; set; }
 
         public StripFoundationBlockworkResponseDto()
         {
-            SandDetails = new SandDto();
-            CementDetails = new CementDto();
-            Block9InchesDetails = new Block9InchesDto();
+            SandDetails = new MaterialDto();
+            CementDetails = new MaterialDto();
+            Block9InchesDetails = new MaterialDto();
         }
     }
 }

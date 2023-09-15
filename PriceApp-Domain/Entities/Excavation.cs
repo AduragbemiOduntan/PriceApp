@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Domain.Entities
 {
-    public class Escavation : BaseEntity
+    public class Excavation : BaseEntity
     {
         public double Girth { get; set; }
-        public int uniqueProjectId { get; set; }
+        public int UniqueProjectId { get; set; }
         public double PricePerMeter { get; set; }
         public double TotalPrice { get; set; }
     }

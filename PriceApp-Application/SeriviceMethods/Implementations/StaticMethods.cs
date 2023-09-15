@@ -50,5 +50,6 @@ namespace PriceApp_Application.SeriviceMethods.Implementations
         }
 
 
+
     }
 }

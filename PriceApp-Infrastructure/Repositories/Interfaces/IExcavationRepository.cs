@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Infrastructure.Repositories.Interfaces
 {
-    public interface IEscavationRepository : IRepositoryBase<Escavation>
+    public interface IExcavationRepository : IRepositoryBase<Excavation>
     {
     }
 }

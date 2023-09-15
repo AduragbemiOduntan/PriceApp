@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Application.Services.Interfaces
 {
-   public interface IEscavationService
+   public interface IExcavationService
     {
-        Task<StandardResponse<EscavationResponseDto>> CreateEscavationAsync(double girth, int uniqueProjectId);
+        Task<StandardResponse<ExcavationResponseDto>> CreateExcavationAsync(double girth, int uniqueProjectId);
     }
 }

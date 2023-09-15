@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Infrastructure.Repositories.Implementations
 {
-    public class EscavationRepository : RepositoryBase<Escavation>, IEscavationRepository
+    public class ExcavationRepository : RepositoryBase<Excavation>, IExcavationRepository
     {
         private readonly DataBaseContext _context;
-        public EscavationRepository(DataBaseContext context) : base(context)
+        public ExcavationRepository(DataBaseContext context) : base(context)
         {
             _context = context;
         }

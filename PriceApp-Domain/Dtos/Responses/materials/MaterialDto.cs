@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PriceApp_Domain.Dtos.Responses.materials
 {
-    public class MaterialPriceQtyBaseClass
+    public class MaterialDto
     {
-        public string Name { get; set; }
+        public string ProductName { get; set; }
         public string UnitOfMeasurement { get; set; }
         public double UnitPrice { get; set; }
         public double Quantity { get; set; }
