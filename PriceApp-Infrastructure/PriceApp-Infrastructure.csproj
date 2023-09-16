@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PriceApp-Domain\PriceApp-Domain.csproj" />
+    <ProjectReference Include="..\PriceApp-Shared\PriceApp-Shared.csproj" />
   </ItemGroup>
 
 </Project>

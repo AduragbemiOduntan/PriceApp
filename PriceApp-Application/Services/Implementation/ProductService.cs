@@ -6,6 +6,7 @@ using PriceApp_Domain.Dtos.Requests;
 using PriceApp_Domain.Dtos.Responses;
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.UOW;
+using PriceApp_Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +43,10 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<ProductResponseDto>.Success($"Product successfully created {newProduct.ProductName}", productToReturn);
         }
 
-        public async Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetAllProductAsync(bool trackChanges)
+        public async Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetAllProductAsync(ProductParameters productParameters)
         {
             _logger.LogInformation($"Attempting to get products {DateTime.Now}");
-            var products = await _unitOfWork.Product.FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
+            var products = await _unitOfWork.Product.FindAllProduct(productParameters);
 
             if (products == null)
             {

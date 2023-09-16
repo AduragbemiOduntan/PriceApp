@@ -196,7 +196,7 @@ namespace PriceApp_Application.Services.Implementation
             var foundationColumnAndReinforcement = new StripFoundationColumAndReinforcementResponseDto();
             foundationColumnAndReinforcement.Section = section;
             foundationColumnAndReinforcement.Stage = stage;
-            foundationColumnAndReinforcement.SubStage = subStage;
+            foundationColumnAndReinforcement.Stage = subStage;
 
             //Cement
             var cementForFCC = foundationColumnAndReinforcement.CementDetails;
@@ -272,7 +272,7 @@ namespace PriceApp_Application.Services.Implementation
                 + sandForFCC.TotalCost + ironY10FCR.TotalCost + ironY16FCR.TotalCost + foundationColumnAndReinforcement.WoodAndNailCost;
 
             return StandardResponse<StripFoundationColumAndReinforcementResponseDto>
-                .Success($"Successful! {foundationColumnAndReinforcement.SubStage} material cost estimate created", foundationColumnAndReinforcement);
+                .Success($"Successful! {foundationColumnAndReinforcement.Stage} material cost estimate created", foundationColumnAndReinforcement);
         }
 
         public async Task<StandardResponse<StripFoundationBlockworkResponseDto>> CreateFoundationBlockWorkAsync(double girth)
@@ -342,7 +342,7 @@ namespace PriceApp_Application.Services.Implementation
                 + sandForBW.TotalCost + blockForBW.TotalCost;
 
             return StandardResponse<StripFoundationBlockworkResponseDto>
-                .Success($"Successful {foundationBlockwork.SubStage} created.", foundationBlockwork);
+                .Success($"Successful {foundationBlockwork.Stage} created.", foundationBlockwork);
         }
 
         public async Task<StandardResponse<StripFoundationBackfillingResponseDto>> CreateFoundationBackfillingAsync(double buildingLength, double buildingBreath)
@@ -378,7 +378,7 @@ namespace PriceApp_Application.Services.Implementation
             var foundationBF = _mapper.Map<StripFoundationBackfillingResponseDto>(foundationBackfilling);
 
             return StandardResponse<StripFoundationBackfillingResponseDto>
-                .Success($"Successful {foundationBackfilling.SubStage} created.", foundationBackfilling);
+                .Success($"Successful {foundationBackfilling.Stage} created.", foundationBackfilling);
         }
 
         public async Task<StandardResponse<GermanFloorDto>> CreateGermanFloorAsync(double buildingLength, double buildingBreath)
@@ -546,7 +546,7 @@ namespace PriceApp_Application.Services.Implementation
                 + sandForBW.TotalCost + blockForBW.TotalCost;
 
             return StandardResponse<BuildingWallBlockworkDto>
-                .Success($"Successful {BuildingWall.SubStage} created.", BuildingWall);
+                .Success($"Successful {BuildingWall.Stage} created.", BuildingWall);
         }
 
         public async Task<StandardResponse<LintelDto>> CreateLintelAsync(double girth)
@@ -782,7 +782,7 @@ namespace PriceApp_Application.Services.Implementation
                 + ironY10WC.TotalCost + ironY16WC.TotalCost + wallColumn.WoodAndNailCost;
 
             return StandardResponse<BuildingWallColumnDto>
-                .Success($"Successful! {wallColumn.SubStage} material cost estimate created", wallColumn);
+                .Success($"Successful! {wallColumn.Stage} material cost estimate created", wallColumn);
         }
     }
 }

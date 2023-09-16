@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PriceApp_Application.Services.Interfaces;
 using PriceApp_Domain.Dtos.Requests;
+using PriceApp_Shared.RequestFeatures;
 
 namespace PriceApp_API.Controllers
 {
@@ -25,9 +26,9 @@ namespace PriceApp_API.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAllProduct(bool trackChanges)
+        public async Task<IActionResult> GetAllProduct([FromQuery]ProductParameters productParameters)
         {
-            var result = await _productService.GetAllProductAsync(trackChanges);
+            var result = await _productService.GetAllProductAsync(productParameters);
             return Ok(result);
         }
 

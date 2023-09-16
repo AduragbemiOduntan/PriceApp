@@ -2,6 +2,7 @@
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 using PriceApp_Infrastructure.Repositories.Interfaces;
+using PriceApp_Shared.RequestFeatures;
 
 namespace PriceApp_Infrastructure.Repositories.Implementations
 {
@@ -22,19 +23,19 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
             return await FindByCondition(x => x.ProductName == productName, trackChanges).FirstOrDefaultAsync();
         }
 
-        public async  Task<IEnumerable<Product>> FindProductByKeyWord(string keyword, bool track)
+        public async Task<IEnumerable<Product>> FindProductByKeyWord(string keyword, bool track)
         {
             return await FindAll(track)
-                .Where(x => x.ProductName.Contains(keyword) || x.Description.Contains(keyword) || x.UnitOfMeasurement.Contains(keyword)).OrderBy(x=>x.ProductName)
+                .Where(x => x.ProductName.Contains(keyword) || x.Description.Contains(keyword) || x.UnitOfMeasurement.Contains(keyword)).OrderBy(x => x.ProductName)
                 .ToListAsync();
-
-           /* return _context.Set<Product>().Where(x =>
-                (x.ProductName.Contains(keyword, StringComparison.OrdinalIgnoreCase))).OrderBy(x => x.ProductName);*/
-
-   /*         return FindAll(track).Where(x =>
-                (x.ProductName.Contains(keyword, StringComparison.OrdinalIgnoreCase))).OrderBy(x => x.ProductName);*/
         }
 
+        public async Task<IEnumerable<Product>> FindAllProduct(ProductParameters productParameter)
+        {
+            return await FindAll(false)
+                .Skip((productParameter.PageNumber - 1) * productParameter.PageSize)
+                .Take(productParameter.PageSize).ToListAsync();
+        }
         //Products with specific names
 
         public Product GetPeg()

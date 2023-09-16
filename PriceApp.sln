@@ -5,11 +5,13 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceApp-API", "PriceApp-API\PriceApp-API.csproj", "{B913E793-69EB-4548-865C-ED702FE2668C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceApp-Domain", "PriceApp-Domain\PriceApp-Domain.csproj", "{A1F9FE1F-47D6-4208-A47A-0F0D6DFD6B90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceApp-Domain", "PriceApp-Domain\PriceApp-Domain.csproj", "{A1F9FE1F-47D6-4208-A47A-0F0D6DFD6B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceApp-Infrastructure", "PriceApp-Infrastructure\PriceApp-Infrastructure.csproj", "{8324125A-20EA-445B-9D6B-E8BB2959CF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceApp-Infrastructure", "PriceApp-Infrastructure\PriceApp-Infrastructure.csproj", "{8324125A-20EA-445B-9D6B-E8BB2959CF9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceApp-Application", "PriceApp-Application\PriceApp-Application.csproj", "{790C7374-C1A1-46EE-9558-87F79B2382E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceApp-Application", "PriceApp-Application\PriceApp-Application.csproj", "{790C7374-C1A1-46EE-9558-87F79B2382E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceApp-Shared", "PriceApp-Shared\PriceApp-Shared.csproj", "{E1728071-FD7C-4E20-8500-D0C52D269DBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{790C7374-C1A1-46EE-9558-87F79B2382E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{790C7374-C1A1-46EE-9558-87F79B2382E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{790C7374-C1A1-46EE-9558-87F79B2382E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1728071-FD7C-4E20-8500-D0C52D269DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1728071-FD7C-4E20-8500-D0C52D269DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1728071-FD7C-4E20-8500-D0C52D269DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1728071-FD7C-4E20-8500-D0C52D269DBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
