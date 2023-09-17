@@ -13,7 +13,7 @@ namespace PriceApp_Application.Services.Interfaces
     public interface IProductService
     {
         Task<StandardResponse<ProductResponseDto>> CreateProduct(ProductRequestDto productRequest);
-        Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetAllProductAsync(ProductParameters productParameters);
+        Task<StandardResponse<(IEnumerable<ProductResponseDto> products, MetaData metaData)>> GetAllProductAsync(ProductParameters productParameters);
         Task<StandardResponse<ProductResponseDto>> GetProductByIdAsync(int id, bool trackChanges);
         Task<StandardResponse<ProductResponseDto>> GetProductByNameAsync(string productName, bool trackChanges);
         Task<StandardResponse<ProductUpdateResponseDto>> UpdateProductUnitPriceAsync(ProductUpdateRequestDto productRequest, int id, bool trackChanges);

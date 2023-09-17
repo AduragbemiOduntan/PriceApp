@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using PriceApp_Application.Services.Interfaces;
 using PriceApp_Domain.Dtos.Requests;
 using PriceApp_Shared.RequestFeatures;
+using System.Text.Json;
 
 namespace PriceApp_API.Controllers
 {
@@ -29,7 +31,9 @@ namespace PriceApp_API.Controllers
         public async Task<IActionResult> GetAllProduct([FromQuery]ProductParameters productParameters)
         {
             var result = await _productService.GetAllProductAsync(productParameters);
-            return Ok(result);
+            Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(result.Data.metaData));
+
+            return Ok(result.Data.products);
         }
 
         [HttpGet("id")]

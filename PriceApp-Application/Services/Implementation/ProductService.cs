@@ -43,19 +43,20 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<ProductResponseDto>.Success($"Product successfully created {newProduct.ProductName}", productToReturn);
         }
 
-        public async Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetAllProductAsync(ProductParameters productParameters)
+        public async Task<StandardResponse<(IEnumerable<ProductResponseDto> products, MetaData metaData)>> GetAllProductAsync(ProductParameters productParameters)
         {
             _logger.LogInformation($"Attempting to get products {DateTime.Now}");
-            var products = await _unitOfWork.Product.FindAllProduct(productParameters);
+            var productsWithMetaData = await _unitOfWork.Product.FindAllProduct(productParameters);
 
-            if (products == null)
+            if (productsWithMetaData == null)
             {
                 _logger.LogError("No product exist");
-                return StandardResponse<IEnumerable<ProductResponseDto>>.Failed($"Product do not exist");
+                return StandardResponse<(IEnumerable<ProductResponseDto> product, MetaData metaData)>.Failed($"Product do not exist");
             }
 
-            var productsReturned = _mapper.Map<IEnumerable<ProductResponseDto>>(products);
-            return StandardResponse<IEnumerable<ProductResponseDto>>.Success($"Products successfully retrieved", productsReturned);
+            var productsReturned = _mapper.Map<IEnumerable<ProductResponseDto>>(productsWithMetaData);
+            return StandardResponse<(IEnumerable<ProductResponseDto> product, MetaData metaData)>
+                .Success($"Products successfully retrieved", (products : productsReturned, metaData: productsWithMetaData.MetaData));
         }
 
         public async Task<StandardResponse<ProductResponseDto>> GetProductByIdAsync(int id, bool trackChanges)
@@ -104,7 +105,7 @@ namespace PriceApp_Application.Services.Implementation
                 _logger.LogError("Id field cannot be empty");
                 return StandardResponse<ProductUpdateResponseDto>.Failed("Id field cannot be empty");
             }
-           
+
             if (productRequest == null)
             {
                 _logger.LogError("Product details cannot be empty");
@@ -150,7 +151,7 @@ namespace PriceApp_Application.Services.Implementation
             if (keyword == null)
             {
                 _logger.LogError($"Keyword field cannot be empty");
-               return StandardResponse<IEnumerable<ProductResponseDto>>.Failed("Keyword field cannot be empty");
+                return StandardResponse<IEnumerable<ProductResponseDto>>.Failed("Keyword field cannot be empty");
             }
 
             _logger.LogInformation("Attempting to get rpoducts");

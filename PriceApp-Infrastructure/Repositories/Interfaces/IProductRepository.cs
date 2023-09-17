@@ -8,7 +8,7 @@ namespace PriceApp_Infrastructure.Repositories.Interfaces
         Task<Product> FindProductById(int id, bool trackChanges);
         Task<Product> FindProductByName(string productName, bool trackChanges);
         Task<IEnumerable<Product>> FindProductByKeyWord(string keyword, bool track);
-        Task<IEnumerable<Product>> FindAllProduct(ProductParameters productParameter);
+        Task<PagedList<Product>> FindAllProduct(ProductParameters productParameter);
 
         //Products with specific names
         Product GetPeg();

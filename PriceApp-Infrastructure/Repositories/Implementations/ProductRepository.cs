@@ -30,11 +30,13 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> FindAllProduct(ProductParameters productParameter)
+        public async Task<PagedList<Product>> FindAllProduct(ProductParameters productParameter)
         {
-            return await FindAll(false)
-                .Skip((productParameter.PageNumber - 1) * productParameter.PageSize)
-                .Take(productParameter.PageSize).ToListAsync();
+            var products = await FindAll(false)
+                .OrderBy(x => x.ProductName)
+                .ToListAsync();
+
+            return PagedList<Product>.ToPagedList(products, productParameter.PageNumber, productParameter.PageSize);
         }
         //Products with specific names
 
