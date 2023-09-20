@@ -13,60 +13,37 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
         {
             _context = context;
         }
-        public async Task<Product> FindProductById(int id, bool trackChanges)
+        public async Task<Product> FindProductById(int id)
         {
-            return await FindByCondition(x => x.Id == id, trackChanges).FirstOrDefaultAsync();
+            return await FindByCondition(x => x.Id == id, false).FirstOrDefaultAsync();
         }
 
-        public async Task<Product> FindProductByName(string productName, bool trackChanges)
+        public async Task<Product> FindProductByName(string productName)
         {
-            return await FindByCondition(x => x.ProductName == productName, trackChanges).FirstOrDefaultAsync();
+            return await FindByCondition(x => x.ProductName == productName, false)
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Product>> FindProductByKeyWord(string keyword, bool track)
+        public async Task<IEnumerable<Product>> FindProductByKeyWord(string keyword)
         {
-            return await FindAll(track)
-                .Where(x => x.ProductName.Contains(keyword) || x.Description.Contains(keyword) || x.UnitOfMeasurement.Contains(keyword)).OrderBy(x => x.ProductName)
-                .ToListAsync();
+            return await FindAll(false)
+                .Where(x => x.ProductName.Contains(keyword) || x.Description.Contains(keyword) || x.UnitOfMeasurement.Contains(keyword))
+                .OrderBy(x => x.ProductName).ToListAsync();
         }
 
         public async Task<PagedList<Product>> FindAllProduct(ProductParameters productParameter)
         {
             var products = await FindAll(false)
-                .OrderBy(x => x.ProductName)
+                .OrderBy(x => x.Id)
                 .ToListAsync();
 
             return PagedList<Product>.ToPagedList(products, productParameter.PageNumber, productParameter.PageSize);
         }
-        //Products with specific names
 
-        public Product GetPeg()
+        public async Task<IEnumerable<Product>> FindProductByState(string productName, string state)
         {
-            const string materialName = "Peg";
-            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
-            return material;
+            return await FindByCondition(x => x.ProductName == productName && x.State == state, false)
+                .OrderByDescending(x => x.UnitPrice).ToListAsync();
         }
-
-        public Product GetProfile()
-        {
-            const string materialName = "Profile";
-            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
-            return material;
-        }
-
-        public Product GetLine()
-        {
-            const string materialName = "Line";
-            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
-            return material;
-        }
-
-        public Product GetNail()
-        {
-            const string materialName = "Nail";
-            var material = _context.Products.Where(x => x.ProductName == materialName).FirstOrDefault();
-            return material;
-        }
-
     }
 }

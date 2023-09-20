@@ -9,7 +9,6 @@ namespace PriceApp_Infrastructure.Repositories.Interfaces
 {
     public interface ISettingOutStageRepository : IRepositoryBase<SettingOutStage>
     {
-        Task<SettingOutStage> GetSettingOutByUniqueProjectId(int uniqueProjectId);
-
+        Task<SettingOutStage> GetSettingOutByUniqueProjectId(string appellation);
     }
 }

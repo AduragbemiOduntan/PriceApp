@@ -1,29 +1,11 @@
-﻿using PriceApp_Domain.Dtos.Requests;
-using PriceApp_Domain.Dtos.Responses;
-using PriceApp_Domain.Dtos.Responses.stages;
-using PriceApp_Domain.Entities;
+﻿using PriceApp_Domain.Dtos.Responses;
 
 namespace PriceApp_Application.Services.Interfaces
 {
     public interface IMaterialEstimateService
     {
         //Material Estimate for specific products
-        Task<StandardResponse<MaterialEstimateResponseDto>> CreatePegMEService(double buidingSetbackPermeter, string stage, int uniqueProjectId);
-        Task<StandardResponse<MaterialEstimateResponseDto>> GetMEByUniqueProjectIdAndStageAsync(int uniqueProjectId, string stage);
+        Task<StandardResponse<MaterialEstimateResponseDto>> GetMaterialEstimateByAppelationAndStageAsync(string appellation, string stage);
         Task<StandardResponse<ICollection<MaterialEstimateResponseDto>>> GetAllMaterialEstimateAsync();
-        Task<StandardResponse<StripFoundationBaseCastingResponseDto>> CreateFoundationBaseCastingAsync(double girth);
-        Task<StandardResponse<StripFoundationColumAndReinforcementResponseDto>> CreateFoundationColumnAndReinforcementAsync(double girth);
-        Task<StandardResponse<StripFoundationBlockworkResponseDto>> CreateFoundationBlockWorkAsync(double girth);
-        Task<StandardResponse<StripFoundationBackfillingResponseDto>> CreateFoundationBackfillingAsync(double buildingLength, double buildingBreath);
-        Task<StandardResponse<GermanFloorDto>> CreateGermanFloorAsync(double buildingLength, double buildingBreath);
-        Task<StandardResponse<BuildingWallBlockworkDto>> CreateBuildingWallBlockWorkAsync(double girth, double buildingFloorHeight);
-        Task<StandardResponse<LintelDto>> CreateLintelAsync(double girth);
-        Task<StandardResponse<BuildingWallColumnDto>> CreateWallColumnAsync(double girth, double wallHeight);
-
-        // Thsi two are merged into CreateFoundationColumnAndReinforcement(double girth) service. 
-        /*        Task<StandardResponse<StripFoundationReinforcementResponseDto>> CreateFoundationReinforcementAsync(double girth);
-                Task<StandardResponse<StripFoundationColumAndReinforcementResponseDto>> CreateFoundationColumCasting(double girth);*/
-        // General
-
     }
 }

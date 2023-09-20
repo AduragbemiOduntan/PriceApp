@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using PriceApp_Application.Services.Interfaces;
 using PriceApp_Domain.Dtos.Requests;
@@ -7,11 +7,6 @@ using PriceApp_Domain.Dtos.Responses;
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.UOW;
 using PriceApp_Shared.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PriceApp_Application.Services.Implementation
 {
@@ -20,12 +15,14 @@ namespace PriceApp_Application.Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProductService> _logger;
         private readonly IMapper _mapper;
+        private readonly IPhotoService _photoService;
 
-        public ProductService(IUnitOfWork unitOfWork, ILogger<ProductService> logger, IMapper mapper)
+        public ProductService(IUnitOfWork unitOfWork, ILogger<ProductService> logger, IMapper mapper, IPhotoService photoService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
+            _photoService = photoService;
         }
 
         public async Task<StandardResponse<ProductResponseDto>> CreateProduct(ProductRequestDto productRequest)
@@ -36,7 +33,10 @@ namespace PriceApp_Application.Services.Implementation
                 return StandardResponse<ProductResponseDto>.Failed("Product creation failed");
             }
             _logger.LogInformation($"Attemping to create a product {DateTime.Now}");
+
+            /*   var state = GetStateOptions();*/
             var newProduct = _mapper.Map<Product>(productRequest);
+
             _unitOfWork.Product.Create(newProduct);
             await _unitOfWork.SaveAsync();
             var productToReturn = _mapper.Map<ProductResponseDto>(newProduct);
@@ -56,10 +56,10 @@ namespace PriceApp_Application.Services.Implementation
 
             var productsReturned = _mapper.Map<IEnumerable<ProductResponseDto>>(productsWithMetaData);
             return StandardResponse<(IEnumerable<ProductResponseDto> product, MetaData metaData)>
-                .Success($"Products successfully retrieved", (products : productsReturned, metaData: productsWithMetaData.MetaData));
+                .Success($"Products successfully retrieved", (products: productsReturned, metaData: productsWithMetaData.MetaData));
         }
 
-        public async Task<StandardResponse<ProductResponseDto>> GetProductByIdAsync(int id, bool trackChanges)
+        public async Task<StandardResponse<ProductResponseDto>> GetProductByIdAsync(int id)
         {
             if (id == null)
             {
@@ -68,7 +68,7 @@ namespace PriceApp_Application.Services.Implementation
             }
 
             _logger.LogInformation($"Attempting to get Product with id {id} {DateTime.Now}");
-            var product = await _unitOfWork.Product.FindProductById(id, trackChanges);
+            var product = await _unitOfWork.Product.FindProductById(id);
 
             if (product == null)
             {
@@ -79,7 +79,7 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<ProductResponseDto>.Success($"Product successfully retrieved", productReturned);
         }
 
-        public async Task<StandardResponse<ProductResponseDto>> GetProductByNameAsync(string productName, bool trackChanges)
+        public async Task<StandardResponse<ProductResponseDto>> GetProductByNameAsync(string productName)
         {
             if (productName == null)
             {
@@ -88,7 +88,7 @@ namespace PriceApp_Application.Services.Implementation
             }
 
             _logger.LogInformation($"Attempting to get Product with product name {productName} {DateTime.Now}");
-            var product = await _unitOfWork.Product.FindProductByName(productName, trackChanges);
+            var product = await _unitOfWork.Product.FindProductByName(productName);
 
             if (product == null)
             {
@@ -98,7 +98,7 @@ namespace PriceApp_Application.Services.Implementation
             var productReturned = _mapper.Map<ProductResponseDto>(product);
             return StandardResponse<ProductResponseDto>.Success($"Product successfully retrieved", productReturned);
         }
-        public async Task<StandardResponse<ProductUpdateResponseDto>> UpdateProductUnitPriceAsync(ProductUpdateRequestDto productRequest, int id, bool trackChanges)
+        public async Task<StandardResponse<ProductUpdateResponseDto>> UpdateProductUnitPriceAsync(ProductUpdateRequestDto productRequest, int id)
         {
             if (id == null)
             {
@@ -113,7 +113,7 @@ namespace PriceApp_Application.Services.Implementation
             }
 
             _logger.LogInformation($"Attemping to update a product {DateTime.Now}");
-            var product = await _unitOfWork.Product.FindProductById(id, trackChanges);
+            var product = await _unitOfWork.Product.FindProductById(id);
             if (product == null)
             {
                 _logger.LogError($"Product with ID {id} not found");
@@ -127,14 +127,14 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<ProductUpdateResponseDto>.Success($"Product successfully updated", productToReturn);
         }
 
-        public async Task<StandardResponse<Product>> DeleteProductAsync(int id, bool trackChanges)
+        public async Task<StandardResponse<Product>> DeleteProductAsync(int id)
         {
             if (id == null)
             {
                 _logger.LogError($"Id field cannot be empty");
                 return StandardResponse<Product>.Failed("Id field cannot be empty");
             }
-            var product = await _unitOfWork.Product.FindProductById(id, trackChanges);
+            var product = await _unitOfWork.Product.FindProductById(id);
 
             if (product == null)
             {
@@ -146,7 +146,31 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<Product>.Success($"Delete successful", product);
         }
 
-        public async Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetProductByKeyWordAsync(string keyword, bool track)
+        public async Task<StandardResponse<(IEnumerable<ProductResponseDto>, ProductStatePriceDto)>> GetProductPriceByStateAsync(string productName, string state)
+        {
+            double price = 0;
+            byte counter = 0;
+            var products = await _unitOfWork.Product.FindProductByState(productName, state);
+            var productPrices = new List<double>();
+
+            foreach (var product in products)
+            {
+                price += product.UnitPrice;
+                counter++;
+            }
+            var averagePrice = price / counter;
+
+            var newProduct = _mapper.Map<IEnumerable<ProductResponseDto>>(productPrices);
+            var statePrice = new ProductStatePriceDto();
+            statePrice.StateLowestPrice = productPrices.Min();
+            statePrice.StateHighestPrice = productPrices.Max();
+            statePrice.StateAveragePrice = averagePrice;
+
+            return StandardResponse<(IEnumerable<ProductResponseDto>, ProductStatePriceDto)>
+                .Success($"{products.ToList().ElementAt(1).State }", (newProduct, statePrice));
+        }
+
+        public async Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetProductByKeyWordAsync(string keyword)
         {
             if (keyword == null)
             {
@@ -155,7 +179,7 @@ namespace PriceApp_Application.Services.Implementation
             }
 
             _logger.LogInformation("Attempting to get rpoducts");
-            var products = await _unitOfWork.Product.FindProductByKeyWord(keyword, track);
+            var products = await _unitOfWork.Product.FindProductByKeyWord(keyword);
             if (products == null)
             {
                 _logger.LogError("No product exist");
@@ -164,6 +188,32 @@ namespace PriceApp_Application.Services.Implementation
             var productsToReturn = _mapper.Map<IEnumerable<ProductResponseDto>>(products);
 
             return StandardResponse<IEnumerable<ProductResponseDto>>.Success($"Successfully retrieve products that match keyword", productsToReturn);
+        }
+
+        public async Task<StandardResponse<(bool, string)>> UploadProfileImage(int productId, IFormFile file)
+        {
+            var result = await _unitOfWork.Product.FindProductById(productId);
+
+            if (result is null)
+            {
+                _logger.LogWarning($"No product with id {productId}");
+
+                return StandardResponse<(bool, string)>.Failed("Product not found", 99);
+            }
+
+            var product = _mapper.Map<Product>(result);
+
+            string url = _photoService.AddPhotoForUser(file);
+
+            if (string.IsNullOrWhiteSpace(url))
+
+                return StandardResponse<(bool, string)>.Failed("Failed to upload", 500);
+
+            product.ImageUrl = url;
+
+            _unitOfWork.Product.Update(product);
+            await _unitOfWork.SaveAsync();
+            return StandardResponse<(bool, string)>.Success("Successfully uploaded image", (true, url), 204);
         }
     }
 }

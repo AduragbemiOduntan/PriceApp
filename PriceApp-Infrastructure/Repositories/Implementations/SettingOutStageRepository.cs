@@ -18,9 +18,9 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<SettingOutStage> GetSettingOutByUniqueProjectId(int uniqueProjectId)
+        public async Task<SettingOutStage> GetSettingOutByUniqueProjectId(string appellation)
         {
-            return await FindByCondition(x => x.UniqueProjectId == uniqueProjectId, false).FirstOrDefaultAsync();
+            return await FindByCondition(x => x.Appellation == appellation, false).FirstOrDefaultAsync();
         }
 
 

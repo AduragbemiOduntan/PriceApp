@@ -29,16 +29,12 @@ namespace PriceApp_Application.Common
             CreateMap<SettingOutStageRequestDto, SettingOutStage>();
             CreateMap<SettingOutStage, SettingOutStageResponseDto>();
 
-            CreateMap<ExcavationRequestDto, Excavation>();
-            CreateMap<Excavation, ExcavationResponseDto>();
-
             CreateMap<FoundationBaseCastingRequestDto, StripFoundationBaseCastingResponseDto>();
             CreateMap<StripFoundationColumAndReinforcementResponseDto, StripFoundationColumAndReinforcementResponseDto>();
             CreateMap<StripFoundationBlockworkResponseDto, StripFoundationBlockworkResponseDto>();
             CreateMap<StripFoundationBackfillingResponseDto, StripFoundationBackfillingResponseDto>();
             CreateMap<GermanFloorDto,GermanFloorDto>();
 
-           /* CreateMap<StripFoundationReinforcementResponseDto, StripFoundationReinforcementResponseDto>();*/
            CreateMap<Product, MaterialDto>();
             CreateMap<MaterialDto, MaterialEstimate>();
         }

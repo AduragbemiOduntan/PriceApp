@@ -20,9 +20,5 @@ namespace PriceApp_Infrastructure.Persistence.ApplicationDbContext
         public DbSet<Product> Products { get; set; }
         public DbSet<MaterialEstimate> MaterialEstimates { get; set; }
         public DbSet<SettingOutStage> SettingOuts { get; set; }
-        public DbSet<Excavation> Escavations { get; set;}
-
-        /*        public DbSet<Estimate> Estimates { get; set; }
-           public DbSet<Project> Projects { get; set; }*/
     }
 }

@@ -9,7 +9,7 @@ namespace PriceApp_Infrastructure.Repositories.Interfaces
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        Task<User> FindUserById(string id, bool trackChanges);
-        Task<User> FindUserByEmail(string email, bool trackChanges);
+        Task<User> FindUserById(string id);
+        Task<User> FindUserByEmail(string email);
     }
 }

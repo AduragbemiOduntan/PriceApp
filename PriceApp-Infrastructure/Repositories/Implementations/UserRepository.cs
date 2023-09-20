@@ -18,14 +18,14 @@ namespace PriceApp_Infrastructure.Repositories.Implementations
             _context = context;
         }
 
-        public async Task<User> FindUserById(string id, bool trackChanges)
+        public async Task<User> FindUserById(string id)
         {
-            return await FindByCondition(x => x.Id == id, trackChanges).FirstOrDefaultAsync();
+            return await FindByCondition(x => x.Id == id, false).FirstOrDefaultAsync();
         }
 
-        public async Task<User> FindUserByEmail(string email, bool trackChanges)
+        public async Task<User> FindUserByEmail(string email)
         {
-            return await FindByCondition(x => x.Email == email, trackChanges).FirstOrDefaultAsync();
+            return await FindByCondition(x => x.Email == email, false).FirstOrDefaultAsync();
         }
     }
 }

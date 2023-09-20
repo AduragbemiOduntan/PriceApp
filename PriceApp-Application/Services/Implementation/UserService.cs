@@ -1,18 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PriceApp_Application.Services.Interfaces;
-using PriceApp_Domain.Dtos.Requests;
 using PriceApp_Domain.Dtos.Responses;
 using PriceApp_Domain.Entities;
 using PriceApp_Infrastructure.UOW;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PriceApp_Application.Services.Implementation
 {
@@ -30,10 +22,10 @@ namespace PriceApp_Application.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<StandardResponse<IEnumerable<UserResponseDto>>> GetAllUsersAsync(bool trackChanges)
+        public async Task<StandardResponse<IEnumerable<UserResponseDto>>> GetAllUsersAsync()
         {
             _logger.LogInformation($"Attempting to get users {DateTime.Now}");
-            var users = await _unitOfWork.User.FindAll(trackChanges).OrderBy(x => x.Id).ToListAsync();
+            var users = await _unitOfWork.User.FindAll(false).OrderBy(x => x.Id).ToListAsync();
 
             if (users == null)
             {
@@ -45,7 +37,7 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<IEnumerable<UserResponseDto>>.Success($"Users successfully retrieved", usersReturned);
         }
 
-        public async Task<StandardResponse<UserResponseDto>> GetUserByIdAsync(string id, bool trackChanges)
+        public async Task<StandardResponse<UserResponseDto>> GetUserByIdAsync(string id)
         {
             if (id == null)
             {
@@ -54,7 +46,7 @@ namespace PriceApp_Application.Services.Implementation
             }
 
             _logger.LogInformation($"Attempting to get user with id {id} {DateTime.Now}");
-            var user = await _unitOfWork.User.FindUserById(id, trackChanges);
+            var user = await _unitOfWork.User.FindUserById(id);
 
             if (user == null)
             {
@@ -65,7 +57,7 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<UserResponseDto>.Success($"User successfully retrieved", userReturned);
         }
 
-        public async Task<StandardResponse<UserResponseDto>> GetUserByEmailAsnc(string email, bool trackChanges)
+        public async Task<StandardResponse<UserResponseDto>> GetUserByEmailAsnc(string email)
         {
             if (email == null)
             {
@@ -74,7 +66,7 @@ namespace PriceApp_Application.Services.Implementation
             }
 
             _logger.LogInformation($"Attempting to get user with email {email} {DateTime.Now}");
-            var user = await _unitOfWork.User.FindUserByEmail(email, trackChanges);
+            var user = await _unitOfWork.User.FindUserByEmail(email);
 
             if (user == null)
             {
@@ -86,10 +78,10 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<UserResponseDto>.Success($"User successfully retrieved", userReturned);
         }
 
-        public async Task<StandardResponse<User>> DeleteUserByIdAsync(string id, bool trackChanges)
+        public async Task<StandardResponse<User>> DeleteUserByIdAsync(string id)
         {
             _logger.LogInformation($"Attempting to delete user with id {id}");
-            var user = await _unitOfWork.User.FindUserById(id, trackChanges);
+            var user = await _unitOfWork.User.FindUserById(id);
 
             if (user == null)
             {
@@ -101,14 +93,14 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<User>.Success($"Delete successful", user);
         }
 
-        public async Task<StandardResponse<User>> DeleteUserByEmailAsync(string email, bool trackChanges)
+        public async Task<StandardResponse<User>> DeleteUserByEmailAsync(string email)
         {
             if (email == null)
             {
                 _logger.LogError($"Email field cannot be empty");
                 return StandardResponse<User>.Failed("Email field cannot be empty");
             }
-            var user = await _unitOfWork.User.FindUserByEmail(email, trackChanges);
+            var user = await _unitOfWork.User.FindUserByEmail(email);
 
             if (user == null)
             {

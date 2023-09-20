@@ -9,17 +9,6 @@ namespace PriceApp_Infrastructure.Repositories.Interfaces
 {
     public interface IMaterialEstimateRepository : IRepositoryBase<MaterialEstimate>
     {
-        Task<MaterialEstimate> GetMEByUniqueProjectIdAndStage(int uniqueProjectId, string stage);
-
-
-        //Material Estimate for specific products
-        /*Task<MaterialEstimate> PegME(double buidingSetbackPermeter, string stage);*/
-
-
-        // General
-        /* Task<MaterialEstimate> GetMaterialEstimateById(int id);
-         Task<MaterialEstimate> GetEstimateByUniqueProjectIdAndStage(int uniqueProjectId, string stage);
-         Task<MaterialEstimate> GetMaterialEstimateByUniqueProjectId(int uniqueProjectId);
- */
+        Task<MaterialEstimate> FindMaterialEstimateByAppelationAndStage(string appellation, string stage);
     }
 }

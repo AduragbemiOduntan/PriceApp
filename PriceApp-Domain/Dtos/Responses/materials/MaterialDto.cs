@@ -14,6 +14,6 @@ namespace PriceApp_Domain.Dtos.Responses.materials
         public double Quantity { get; set; }
         public double TotalCost { get; set; }
         public string Stage { get; set; }
-        public int UniqueProjectId { get; set; }
+        public string Appellation { get; set; }
     }
 }

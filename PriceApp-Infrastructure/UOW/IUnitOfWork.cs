@@ -1,10 +1,4 @@
-﻿using PriceApp_Infrastructure.Repositories.Implementations;
-using PriceApp_Infrastructure.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PriceApp_Infrastructure.Repositories.Interfaces;
 
 namespace PriceApp_Infrastructure.UOW
 {
@@ -14,7 +8,6 @@ namespace PriceApp_Infrastructure.UOW
         IUserRepository User { get; }
         IMaterialEstimateRepository MaterialEstimate { get; }
         ISettingOutStageRepository SettingOut { get; }
-        IExcavationRepository Excavation { get; }
         Task SaveAsync();
     }
 }

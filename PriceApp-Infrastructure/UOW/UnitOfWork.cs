@@ -1,12 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
+﻿using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 using PriceApp_Infrastructure.Repositories.Implementations;
 using PriceApp_Infrastructure.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PriceApp_Infrastructure.UOW
 {
@@ -17,7 +11,6 @@ namespace PriceApp_Infrastructure.UOW
         private IUserRepository _userRepository;
         private IMaterialEstimateRepository _materialEstimateRepository;
         private ISettingOutStageRepository _settingOutRepository;
-        private IExcavationRepository _excavationRepository;
 
         public UnitOfWork(DataBaseContext context)
         {
@@ -61,16 +54,6 @@ namespace PriceApp_Infrastructure.UOW
                 if (_settingOutRepository == null)
                     _settingOutRepository = new SettingOutStageRepository(_context);
                 return _settingOutRepository;
-            }
-        }
-
-        public IExcavationRepository Excavation
-        {
-            get
-            {
-                if(_excavationRepository == null)
-                    _excavationRepository = new ExcavationRepository(_context); 
-                return _excavationRepository;
             }
         }
 

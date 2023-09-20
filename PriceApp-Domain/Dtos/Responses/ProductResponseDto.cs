@@ -11,8 +11,9 @@ namespace PriceApp_Domain.Dtos.Responses
     {
         public string ProductName { get; set; }
         public string Description { get; set; }
-        /*public Category Category { get; set; }*/
         public string UnitOfMeasurement { get; set; }
         public decimal UnitPrice { get; set; }
+        public string State { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

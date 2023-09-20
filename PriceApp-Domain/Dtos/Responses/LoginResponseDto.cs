@@ -10,8 +10,8 @@ namespace PriceApp_Domain.Dtos.Responses
     public class LoginResponseDto
     {
         [Required(ErrorMessage = "User name is required")]
-        public string? UserName { get; init; }
+        public string Email { get; init; }
         [Required(ErrorMessage = "Password is required")]
-        public string? Password { get; init; }
+        public string Password { get; init; }
     }
 }

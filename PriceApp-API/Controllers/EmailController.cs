@@ -14,11 +14,11 @@ namespace PriceApp_API.Controllers
             _emailService = emailService;
         }
 
-        [HttpPost("emailSender")]
+/*        [HttpPost("emailSender")]
         public async Task<IActionResult> CreateMail(string recieverEmail, string subject, string messageBody)
         {
               await _emailService.CreateEmail(recieverEmail, subject, messageBody);
             return Ok("Mail has been succeefully sent");
-        }
+        }*/
     }
 }

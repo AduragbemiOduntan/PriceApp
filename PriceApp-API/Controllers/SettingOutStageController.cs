@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PriceApp_Application.Services.Interfaces;
-using PriceApp_Domain.Dtos.Requests;
 
 namespace PriceApp_API.Controllers
 {
@@ -15,32 +14,28 @@ namespace PriceApp_API.Controllers
             _settingOutStageService = settingOutStageService;
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateSettingOut(double buidingSetbackPerimeter, string stage, int uniqueProjectId)
+        public async Task<IActionResult> CreateSettingOut([FromBody]double buidingSetbackPerimeter, string stage, string state, string appellation)
         {
-            var result = await _settingOutStageService.CreateSettingOutAsync(buidingSetbackPerimeter, stage, uniqueProjectId);
+            var result = await _settingOutStageService.CreateSettingOutAsync(buidingSetbackPerimeter, stage, state, appellation);
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("uniqueId")]
-        public async Task<IActionResult> GetSettingOutByProjectId(int uniqueProjectId)
+        public async Task<IActionResult> GetSettingOutByAppellation([FromBody]string state, string appellation)
         {
-            var result = await _settingOutStageService.GetSettingOutByProjectIdAsync(uniqueProjectId);
+            var result = await _settingOutStageService.GetSettingOutByAppellationAsync(state, appellation);
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllSettingOut()
         {
             var result = await _settingOutStageService.GetAllSettingOutAsync();
             return Ok(result);
         }
-
-/*        [HttpPost]
-        public async Task<IActionResult> CreateSettingOut(SettingOutStageRequestDto settingOutStageRequest, double buildinSetbackPerimeter, int uniqueProjectId)
-        {
-            var result = _settingOutStageService.CreateSettingOutStageEstimate(settingOutStageRequest,buildinSetbackPerimeter, uniqueProjectId);
-            return Ok(result);
-        }*/
     }
 }

@@ -51,13 +51,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9aec9e4b-1823-4d95-a415-bd85cba56343",
+                            Id = "c51f96bd-a226-42d5-8c6c-3497a6d66dcc",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "18dab17b-ac4e-4e8f-8ee1-9bc1e556b871",
+                            Id = "355d934c-d185-4fe0-8851-5fb4a57d7f49",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -169,67 +169,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Estimate");
-                });
-
-            modelBuilder.Entity("PriceApp_Domain.Entities.Excavation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Girth")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("PricePerMeter")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("UniqueProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Escavations");
-                });
-
             modelBuilder.Entity("PriceApp_Domain.Entities.MaterialEstimate", b =>
                 {
                     b.Property<int>("Id")
@@ -238,14 +177,21 @@ namespace PriceApp_Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Appellation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EstimateId")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
@@ -267,9 +213,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("UniqueProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UnitOfMeasurement")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,13 +220,16 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("EstimateId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("SettingOutStageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MaterialEstimates");
                 });
@@ -299,14 +245,27 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -325,59 +284,263 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9246),
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7750),
                             Description = "Sharp sand",
-                            ModifiedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9298),
-                            ProductName = "Sand",
+                            ProductName = "Sharp Sand 5 Ton Trip",
+                            State = "Lagos",
                             UnitOfMeasurement = "Tonnage",
-                            UnitPrice = 500000.0
+                            UnitPrice = 25000.0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9303),
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7853),
+                            Description = "Sharp sand",
+                            ProductName = "Sharp Sand 5 Ton Trip",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 27000.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7858),
                             Description = "Water proof",
-                            ModifiedAt = new DateTime(2023, 9, 14, 18, 59, 55, 724, DateTimeKind.Local).AddTicks(9304),
                             ProductName = "Cement",
+                            State = "Lagos",
                             UnitOfMeasurement = "Bag",
-                            UnitPrice = 8000.0
+                            UnitPrice = 4000.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7864),
+                            Description = "Water proof",
+                            ProductName = "Cement",
+                            State = "Delta",
+                            UnitOfMeasurement = "Bag",
+                            UnitPrice = 4200.0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7869),
+                            Description = "Hard, granular stone used for construction",
+                            ProductName = "3/4 Granite 5 Ton Trip",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 63400.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7874),
+                            Description = "Hard, granular stone used for construction",
+                            ProductName = "3/4 Granite 5 Ton Trip",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 63600.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7879),
+                            Description = "",
+                            ProductName = "Iron Y10 High Yield Local",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 350000.0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7885),
+                            Description = "",
+                            ProductName = "Iron Y10 High Yield Local",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 380000.0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7890),
+                            Description = "",
+                            ProductName = "Iron Y12 High Yield Local",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 380000.0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7895),
+                            Description = "",
+                            ProductName = "Iron Y12 High Yield Local",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 380000.0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7900),
+                            Description = "",
+                            ProductName = "Iron Y16 High Yield Local",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 380000.0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7906),
+                            Description = "",
+                            ProductName = "Iron Y16 High Yield Local",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 380000.0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7912),
+                            Description = "",
+                            ProductName = "9 Inches Block",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 650.0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7917),
+                            Description = "",
+                            ProductName = "9 Inches Block",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 700.0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7921),
+                            Description = "Filling sand",
+                            ProductName = "Laterite 5 Ton Trip",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 6000.0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7926),
+                            Description = "Filling sand",
+                            ProductName = "Laterite 5 Ton Trip",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 7500.0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7933),
+                            Description = "Filling sand",
+                            ProductName = "Plaster Sand 5 Ton Trip",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 5000.0
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7939),
+                            Description = "Filling sand",
+                            ProductName = "Plaster Sand 5 Ton Trip",
+                            State = "Delta",
+                            UnitOfMeasurement = "Tonnage",
+                            UnitPrice = 5500.0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7944),
+                            Description = "For setting-out",
+                            ProductName = "Peg",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Unit",
+                            UnitPrice = 400.0
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7950),
+                            Description = "For setting-out",
+                            ProductName = "Peg",
+                            State = "Delta",
+                            UnitOfMeasurement = "Unit",
+                            UnitPrice = 450.0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7956),
+                            Description = "For setting-out",
+                            ProductName = "Profile",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Unit",
+                            UnitPrice = 650.0
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7963),
+                            Description = "For setting-out",
+                            ProductName = "Profile",
+                            State = "Delta",
+                            UnitOfMeasurement = "Unit",
+                            UnitPrice = 650.0
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7968),
+                            Description = "For setting-out",
+                            ProductName = "Line",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Unit",
+                            UnitPrice = 900.0
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7975),
+                            Description = "For setting-out",
+                            ProductName = "Line",
+                            State = "Delta",
+                            UnitOfMeasurement = "Unit",
+                            UnitPrice = 920.0
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7981),
+                            Description = "For wood work",
+                            ProductName = "Nail",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Bag",
+                            UnitPrice = 4000.0
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7987),
+                            Description = "For wood work",
+                            ProductName = "Nail",
+                            State = "Lagos",
+                            UnitOfMeasurement = "Bag",
+                            UnitPrice = 4000.0
                         });
-                });
-
-            modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.SettingOutStage", b =>
@@ -388,17 +551,27 @@ namespace PriceApp_Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Appellation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("BuidingSetbackPermeter")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("LineDerivedEstimatedCost")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("NailDerivedEstimatedCost")
                         .HasColumnType("float");
@@ -411,9 +584,6 @@ namespace PriceApp_Infrastructure.Migrations
 
                     b.Property<double>("TotalCostEstimate")
                         .HasColumnType("float");
-
-                    b.Property<int>("UniqueProjectId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -439,19 +609,15 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -470,6 +636,12 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -479,10 +651,6 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -548,27 +716,8 @@ namespace PriceApp_Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
-                {
-                    b.HasOne("PriceApp_Domain.Entities.Project", null)
-                        .WithMany("Estimates")
-                        .HasForeignKey("ProjectId");
-
-                    b.HasOne("PriceApp_Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PriceApp_Domain.Entities.MaterialEstimate", b =>
                 {
-                    b.HasOne("PriceApp_Domain.Entities.Estimate", null)
-                        .WithMany("EstimatedItems")
-                        .HasForeignKey("EstimateId");
-
                     b.HasOne("PriceApp_Domain.Entities.Product", null)
                         .WithMany("MaterialEstimate")
                         .HasForeignKey("ProductId");
@@ -576,28 +725,15 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasOne("PriceApp_Domain.Entities.SettingOutStage", null)
                         .WithMany("MaterialEstimates")
                         .HasForeignKey("SettingOutStageId");
-                });
 
-            modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
-                {
                     b.HasOne("PriceApp_Domain.Entities.User", null)
-                        .WithMany("Projects")
+                        .WithMany("MaterialEstimate")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("PriceApp_Domain.Entities.Estimate", b =>
-                {
-                    b.Navigation("EstimatedItems");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.Product", b =>
                 {
                     b.Navigation("MaterialEstimate");
-                });
-
-            modelBuilder.Entity("PriceApp_Domain.Entities.Project", b =>
-                {
-                    b.Navigation("Estimates");
                 });
 
             modelBuilder.Entity("PriceApp_Domain.Entities.SettingOutStage", b =>
@@ -607,7 +743,7 @@ namespace PriceApp_Infrastructure.Migrations
 
             modelBuilder.Entity("PriceApp_Domain.Entities.User", b =>
                 {
-                    b.Navigation("Projects");
+                    b.Navigation("MaterialEstimate");
                 });
 #pragma warning restore 612, 618
         }

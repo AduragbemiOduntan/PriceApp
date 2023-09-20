@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PriceApp_Domain.Entities
+﻿namespace PriceApp_Domain.Entities
 {
     public class SettingOutStage : BaseEntity
     {
@@ -16,17 +9,7 @@ namespace PriceApp_Domain.Entities
         public double BuidingSetbackPermeter { get; set; }
 
         public double TotalCostEstimate { get; set; }
-        public int UniqueProjectId { get; set; }
-
-        /*       [ForeignKey(nameof(MaterialEstimate))]
-               public int MaterialEstimateId { get; set; }
-               public MaterialEstimate Peg { get; set; }*/
+        public string Appellation { get; set; }
         public ICollection<MaterialEstimate> MaterialEstimates { get; set; }
-        /*
-                [ForeignKey(nameof(Project))]
-                public int ProjectId { get; set; }
-                public Project Project { get; set; }
-        */
-
     }
 }
