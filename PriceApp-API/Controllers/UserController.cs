@@ -16,7 +16,7 @@ namespace PriceApp_API.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = "Admin")]
+       /* [Authorize(Roles = "Admin")]*/
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -24,7 +24,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         [HttpGet("id")]
         public async Task<IActionResult> GetUserById([FromBody]string id)
         {
@@ -32,7 +32,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+       /* [Authorize]*/
         [HttpGet("email")]
         public async Task<IActionResult> GetUserByEmail([FromBody] string email)
         {

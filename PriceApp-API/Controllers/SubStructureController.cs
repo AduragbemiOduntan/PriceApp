@@ -14,7 +14,7 @@ namespace PriceApp_API.Controllers
             _subStructureEstimateService = subStructureEstimateService;
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost("foundationBaseCasting")]
         public async Task<IActionResult> CreateFoundationBaseCasting([FromBody]double girth, string appellation)
         {
@@ -22,7 +22,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost("foundationColumnAndReinforcement")]
         public async Task<IActionResult> CreateFoundationColumnAndReinforcement([FromBody] double girth, string appellation)
         {
@@ -30,7 +30,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+      /*  [Authorize]*/
         [HttpPost("foundationBlockwork")]
         public async Task<IActionResult> CreateFoundationBlockWorkA([FromBody] double girth, string appellation)
         {
@@ -38,7 +38,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost("foundationBackfilling")]
         public async Task<IActionResult> CreateFoundationBackfilling([FromBody] double buildingLength, double buildingBreath, string appellation)
         {
@@ -46,7 +46,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost("germanFloor")]
         public async Task<IActionResult> CreateGermanFloor([FromBody] double buildingLength, double buildingBreath, string appellation)
         {

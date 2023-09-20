@@ -19,7 +19,7 @@ namespace PriceApp_API.Controllers
             _productService = productService;
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost]
         [Route("createProduct")]
         public async Task<IActionResult> CreateProduct([FromBody]ProductRequestDto productRequest)
@@ -28,7 +28,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-      [Authorize]
+      /*[Authorize]*/
         [HttpGet]
         public async Task<IActionResult> GetAllProduct([FromQuery]ProductParameters productParameters)
         {
@@ -37,7 +37,7 @@ namespace PriceApp_API.Controllers
             return Ok(result.Data.products);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpGet("id")]
         public async Task<IActionResult> GetProductById([FromBody]int id)
         {
@@ -45,7 +45,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpGet("name")]
         public async Task<IActionResult> GetProductByName([FromBody]string productName)
         {
@@ -53,7 +53,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpGet("keyword")]
         public async Task<IActionResult> GetProductByKeyWord([FromBody]string keyword)
         {
@@ -61,14 +61,15 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize, HttpGet("byState")]
+      /*  [Authorize]*/
+            [HttpGet("byState")]
         public async Task<IActionResult> GetProductPriceByState([FromBody]string productName, string state)
         {
             var result = await _productService.GetProductPriceByStateAsync(productName, state);
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPut]
         public async Task<IActionResult> PutProduct([FromBody]ProductUpdateRequestDto productRequest, int id)
         {
