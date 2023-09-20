@@ -16,6 +16,6 @@ namespace PriceApp_Application.Services.Interfaces
         Task<StandardResponse<Product>> DeleteProductAsync(int id);
         Task<StandardResponse<IEnumerable<ProductResponseDto>>> GetProductByKeyWordAsync(string keyword);
         Task<StandardResponse<(IEnumerable<ProductResponseDto>, ProductStatePriceDto)>> GetProductPriceByStateAsync(string productName, string state);
-        Task<StandardResponse<(bool, string)>> UploadProfileImage(int productId, IFormFile file);
+   /*     Task<StandardResponse<(bool, string)>> UploadProfileImage(int productId, IFormFile file);*/
     }
 }

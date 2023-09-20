@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PriceApp_Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class inititalMigration : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +32,9 @@ namespace PriceApp_Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -65,7 +66,6 @@ namespace PriceApp_Infrastructure.Migrations
                     UnitOfMeasurement = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitPrice = table.Column<double>(type: "float", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -251,41 +251,41 @@ namespace PriceApp_Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "5f0c0774-ac6d-4b17-91d9-09c0dc7d3c05", null, "Admin", "ADMIN" },
-                    { "ca61303a-74b1-40f7-9134-26dfe757657f", null, "User", "USER" }
+                    { "30a6b18c-22f3-41f7-b4ca-e5b926c0d843", null, "User", "USER" },
+                    { "9d2da15f-6d2e-4f00-9605-4f5ec000e090", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "ImageUrl", "ModifiedAt", "ModifiedBy", "ProductName", "State", "UnitOfMeasurement", "UnitPrice" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "ModifiedAt", "ModifiedBy", "ProductName", "State", "UnitOfMeasurement", "UnitPrice" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1627), null, "Sharp sand", null, null, null, "Sharp Sand 5 Ton Trip", "Lagos", "Tonnage", 25000.0 },
-                    { 2, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1715), null, "Sharp sand", null, null, null, "Sharp Sand 5 Ton Trip", "Delta", "Tonnage", 27000.0 },
-                    { 3, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1719), null, "Water proof", null, null, null, "Cement", "Lagos", "Bag", 4000.0 },
-                    { 4, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1722), null, "Water proof", null, null, null, "Cement", "Delta", "Bag", 4200.0 },
-                    { 5, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1724), null, "Hard, granular stone used for construction", null, null, null, "3/4 Granite 5 Ton Trip", "Lagos", "Tonnage", 63400.0 },
-                    { 6, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1728), null, "Hard, granular stone used for construction", null, null, null, "3/4 Granite 5 Ton Trip", "Delta", "Tonnage", 63600.0 },
-                    { 7, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1731), null, "", null, null, null, "Iron Y10 High Yield Local", "Lagos", "Tonnage", 350000.0 },
-                    { 8, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1734), null, "", null, null, null, "Iron Y10 High Yield Local", "Delta", "Tonnage", 380000.0 },
-                    { 9, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1738), null, "", null, null, null, "Iron Y12 High Yield Local", "Lagos", "Tonnage", 380000.0 },
-                    { 10, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1741), null, "", null, null, null, "Iron Y12 High Yield Local", "Delta", "Tonnage", 380000.0 },
-                    { 11, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1744), null, "", null, null, null, "Iron Y16 High Yield Local", "Lagos", "Tonnage", 380000.0 },
-                    { 12, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1747), null, "", null, null, null, "Iron Y16 High Yield Local", "Delta", "Tonnage", 380000.0 },
-                    { 13, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1750), null, "", null, null, null, "9 Inches Block", "Lagos", "Tonnage", 650.0 },
-                    { 14, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1753), null, "", null, null, null, "9 Inches Block", "Delta", "Tonnage", 700.0 },
-                    { 15, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1756), null, "Filling sand", null, null, null, "Laterite 5 Ton Trip", "Lagos", "Tonnage", 6000.0 },
-                    { 16, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1759), null, "Filling sand", null, null, null, "Laterite 5 Ton Trip", "Delta", "Tonnage", 7500.0 },
-                    { 17, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1761), null, "Filling sand", null, null, null, "Plaster Sand 5 Ton Trip", "Lagos", "Tonnage", 5000.0 },
-                    { 18, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1764), null, "Filling sand", null, null, null, "Plaster Sand 5 Ton Trip", "Delta", "Tonnage", 5500.0 },
-                    { 19, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1767), null, "For setting-out", null, null, null, "Peg", "Lagos", "Unit", 400.0 },
-                    { 20, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1769), null, "For setting-out", null, null, null, "Peg", "Delta", "Unit", 450.0 },
-                    { 21, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1772), null, "For setting-out", null, null, null, "Profile", "Lagos", "Unit", 650.0 },
-                    { 22, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1774), null, "For setting-out", null, null, null, "Profile", "Delta", "Unit", 650.0 },
-                    { 23, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1777), null, "For setting-out", null, null, null, "Line", "Lagos", "Unit", 900.0 },
-                    { 24, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1780), null, "For setting-out", null, null, null, "Line", "Delta", "Unit", 920.0 },
-                    { 25, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1782), null, "For wood work", null, null, null, "Nail", "Lagos", "Bag", 4000.0 },
-                    { 26, new DateTime(2023, 9, 19, 14, 19, 17, 979, DateTimeKind.Local).AddTicks(1785), null, "For wood work", null, null, null, "Nail", "Lagos", "Bag", 4000.0 }
+                    { 1, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6461), null, "Sharp sand", null, null, "Sharp Sand 5 Ton Trip", "Lagos", "Tonnage", 25000.0 },
+                    { 2, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6548), null, "Sharp sand", null, null, "Sharp Sand 5 Ton Trip", "Delta", "Tonnage", 27000.0 },
+                    { 3, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6553), null, "Water proof", null, null, "Cement", "Lagos", "Bag", 4000.0 },
+                    { 4, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6557), null, "Water proof", null, null, "Cement", "Delta", "Bag", 4200.0 },
+                    { 5, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6561), null, "Hard, granular stone used for construction", null, null, "3/4 Granite 5 Ton Trip", "Lagos", "Tonnage", 63400.0 },
+                    { 6, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6565), null, "Hard, granular stone used for construction", null, null, "3/4 Granite 5 Ton Trip", "Delta", "Tonnage", 63600.0 },
+                    { 7, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6569), null, "", null, null, "Iron Y10 High Yield Local", "Lagos", "Tonnage", 350000.0 },
+                    { 8, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6573), null, "", null, null, "Iron Y10 High Yield Local", "Delta", "Tonnage", 380000.0 },
+                    { 9, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6577), null, "", null, null, "Iron Y12 High Yield Local", "Lagos", "Tonnage", 380000.0 },
+                    { 10, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6581), null, "", null, null, "Iron Y12 High Yield Local", "Delta", "Tonnage", 380000.0 },
+                    { 11, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6585), null, "", null, null, "Iron Y16 High Yield Local", "Lagos", "Tonnage", 380000.0 },
+                    { 12, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6589), null, "", null, null, "Iron Y16 High Yield Local", "Delta", "Tonnage", 380000.0 },
+                    { 13, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6593), null, "", null, null, "9 Inches Block", "Lagos", "Tonnage", 650.0 },
+                    { 14, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6597), null, "", null, null, "9 Inches Block", "Delta", "Tonnage", 700.0 },
+                    { 15, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6601), null, "Filling sand", null, null, "Laterite 5 Ton Trip", "Lagos", "Tonnage", 6000.0 },
+                    { 16, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6605), null, "Filling sand", null, null, "Laterite 5 Ton Trip", "Delta", "Tonnage", 7500.0 },
+                    { 17, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6609), null, "Filling sand", null, null, "Plaster Sand 5 Ton Trip", "Lagos", "Tonnage", 5000.0 },
+                    { 18, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6613), null, "Filling sand", null, null, "Plaster Sand 5 Ton Trip", "Delta", "Tonnage", 5500.0 },
+                    { 19, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6616), null, "For setting-out", null, null, "Peg", "Lagos", "Unit", 400.0 },
+                    { 20, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6621), null, "For setting-out", null, null, "Peg", "Delta", "Unit", 450.0 },
+                    { 21, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6624), null, "For setting-out", null, null, "Profile", "Lagos", "Unit", 650.0 },
+                    { 22, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6628), null, "For setting-out", null, null, "Profile", "Delta", "Unit", 650.0 },
+                    { 23, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6632), null, "For setting-out", null, null, "Line", "Lagos", "Unit", 900.0 },
+                    { 24, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6635), null, "For setting-out", null, null, "Line", "Delta", "Unit", 920.0 },
+                    { 25, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6639), null, "For wood work", null, null, "Nail", "Lagos", "Bag", 4000.0 },
+                    { 26, new DateTime(2023, 9, 20, 8, 7, 0, 278, DateTimeKind.Local).AddTicks(6643), null, "For wood work", null, null, "Nail", "Lagos", "Bag", 4000.0 }
                 });
 
             migrationBuilder.CreateIndex(

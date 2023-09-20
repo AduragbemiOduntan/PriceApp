@@ -15,14 +15,12 @@ namespace PriceApp_Application.Services.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProductService> _logger;
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
 
-        public ProductService(IUnitOfWork unitOfWork, ILogger<ProductService> logger, IMapper mapper, IPhotoService photoService)
+        public ProductService(IUnitOfWork unitOfWork, ILogger<ProductService> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _mapper = mapper;
-            _photoService = photoService;
         }
 
         public async Task<StandardResponse<ProductResponseDto>> CreateProduct(ProductRequestDto productRequest)
@@ -190,7 +188,7 @@ namespace PriceApp_Application.Services.Implementation
             return StandardResponse<IEnumerable<ProductResponseDto>>.Success($"Successfully retrieve products that match keyword", productsToReturn);
         }
 
-        public async Task<StandardResponse<(bool, string)>> UploadProfileImage(int productId, IFormFile file)
+/*        public async Task<StandardResponse<(bool, string)>> UploadProfileImage(int productId, IFormFile file)
         {
             var result = await _unitOfWork.Product.FindProductById(productId);
 
@@ -214,7 +212,7 @@ namespace PriceApp_Application.Services.Implementation
             _unitOfWork.Product.Update(product);
             await _unitOfWork.SaveAsync();
             return StandardResponse<(bool, string)>.Success("Successfully uploaded image", (true, url), 204);
-        }
+        }*/
     }
 }
 

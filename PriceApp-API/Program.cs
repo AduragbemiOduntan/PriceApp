@@ -17,7 +17,6 @@ builder.Services.ConfigureDependencyInjection();
 builder.Services.AddAutoMapper(typeof(MapInitializer));
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
-/*builder.Services.ConfigureJWT(builder.Configuration);*/
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();

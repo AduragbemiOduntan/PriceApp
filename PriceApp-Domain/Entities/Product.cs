@@ -7,7 +7,7 @@
         public string UnitOfMeasurement { get; set; }
         public double UnitPrice { get; set; }
         public string State { get; set; }
-        public string? ImageUrl {  get; set; }      
+       /* public string? ImageUrl {  get; set; } */     
         public ICollection<MaterialEstimate> MaterialEstimate { get; set; }
     }
 }

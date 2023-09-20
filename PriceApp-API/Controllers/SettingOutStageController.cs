@@ -14,7 +14,7 @@ namespace PriceApp_API.Controllers
             _settingOutStageService = settingOutStageService;
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost]
         public async Task<IActionResult> CreateSettingOut([FromBody]double buidingSetbackPerimeter, string stage, string state, string appellation)
         {
@@ -22,7 +22,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpGet("uniqueId")]
         public async Task<IActionResult> GetSettingOutByAppellation([FromBody]string state, string appellation)
         {
@@ -30,7 +30,7 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        /*[*//*Authorize]*/
         [HttpGet]
         public async Task<IActionResult> GetAllSettingOut()
         {

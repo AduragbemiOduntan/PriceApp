@@ -15,6 +15,6 @@ namespace PriceApp_Domain.Dtos.Requests
         public string UnitOfMeasurement { get; set; }
         public decimal UnitPrice { get; set; }
         public string State { get; set; }
-        public string ImageUrl { get; set; }
+        /*public string ImageUrl { get; set; }*/
     }
 }
