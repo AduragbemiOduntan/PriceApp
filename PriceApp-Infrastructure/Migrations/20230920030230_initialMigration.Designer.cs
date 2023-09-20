@@ -12,8 +12,8 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230919152532_newUpdateUserModel")]
-    partial class newUpdateUserModel
+    [Migration("20230920030230_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace PriceApp_Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c51f96bd-a226-42d5-8c6c-3497a6d66dcc",
+                            Id = "0c258b5b-c07d-4df4-92ad-c4524ec87380",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "355d934c-d185-4fe0-8851-5fb4a57d7f49",
+                            Id = "8e13ba85-7b94-4f2b-b988-9e2b04344c19",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -287,7 +287,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7750),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3107),
                             Description = "Sharp sand",
                             ProductName = "Sharp Sand 5 Ton Trip",
                             State = "Lagos",
@@ -297,7 +297,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7853),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3175),
                             Description = "Sharp sand",
                             ProductName = "Sharp Sand 5 Ton Trip",
                             State = "Delta",
@@ -307,7 +307,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7858),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3178),
                             Description = "Water proof",
                             ProductName = "Cement",
                             State = "Lagos",
@@ -317,7 +317,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7864),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3180),
                             Description = "Water proof",
                             ProductName = "Cement",
                             State = "Delta",
@@ -327,7 +327,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7869),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3183),
                             Description = "Hard, granular stone used for construction",
                             ProductName = "3/4 Granite 5 Ton Trip",
                             State = "Lagos",
@@ -337,7 +337,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7874),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3185),
                             Description = "Hard, granular stone used for construction",
                             ProductName = "3/4 Granite 5 Ton Trip",
                             State = "Delta",
@@ -347,7 +347,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7879),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3187),
                             Description = "",
                             ProductName = "Iron Y10 High Yield Local",
                             State = "Lagos",
@@ -357,7 +357,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7885),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3189),
                             Description = "",
                             ProductName = "Iron Y10 High Yield Local",
                             State = "Delta",
@@ -367,7 +367,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7890),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3192),
                             Description = "",
                             ProductName = "Iron Y12 High Yield Local",
                             State = "Lagos",
@@ -377,7 +377,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7895),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3196),
                             Description = "",
                             ProductName = "Iron Y12 High Yield Local",
                             State = "Delta",
@@ -387,7 +387,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7900),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3198),
                             Description = "",
                             ProductName = "Iron Y16 High Yield Local",
                             State = "Lagos",
@@ -397,7 +397,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7906),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3200),
                             Description = "",
                             ProductName = "Iron Y16 High Yield Local",
                             State = "Delta",
@@ -407,7 +407,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7912),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3202),
                             Description = "",
                             ProductName = "9 Inches Block",
                             State = "Lagos",
@@ -417,7 +417,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7917),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3204),
                             Description = "",
                             ProductName = "9 Inches Block",
                             State = "Delta",
@@ -427,7 +427,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7921),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3206),
                             Description = "Filling sand",
                             ProductName = "Laterite 5 Ton Trip",
                             State = "Lagos",
@@ -437,7 +437,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7926),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3208),
                             Description = "Filling sand",
                             ProductName = "Laterite 5 Ton Trip",
                             State = "Delta",
@@ -447,7 +447,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7933),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3209),
                             Description = "Filling sand",
                             ProductName = "Plaster Sand 5 Ton Trip",
                             State = "Lagos",
@@ -457,7 +457,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7939),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3211),
                             Description = "Filling sand",
                             ProductName = "Plaster Sand 5 Ton Trip",
                             State = "Delta",
@@ -467,7 +467,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7944),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3213),
                             Description = "For setting-out",
                             ProductName = "Peg",
                             State = "Lagos",
@@ -477,7 +477,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7950),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3215),
                             Description = "For setting-out",
                             ProductName = "Peg",
                             State = "Delta",
@@ -487,7 +487,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7956),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3217),
                             Description = "For setting-out",
                             ProductName = "Profile",
                             State = "Lagos",
@@ -497,7 +497,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7963),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3219),
                             Description = "For setting-out",
                             ProductName = "Profile",
                             State = "Delta",
@@ -507,7 +507,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7968),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3221),
                             Description = "For setting-out",
                             ProductName = "Line",
                             State = "Lagos",
@@ -517,7 +517,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7975),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3223),
                             Description = "For setting-out",
                             ProductName = "Line",
                             State = "Delta",
@@ -527,7 +527,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7981),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3225),
                             Description = "For wood work",
                             ProductName = "Nail",
                             State = "Lagos",
@@ -537,7 +537,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2023, 9, 19, 16, 25, 31, 852, DateTimeKind.Local).AddTicks(7987),
+                            CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3227),
                             Description = "For wood work",
                             ProductName = "Nail",
                             State = "Lagos",
