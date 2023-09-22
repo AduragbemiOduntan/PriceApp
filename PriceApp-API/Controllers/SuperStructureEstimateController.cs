@@ -16,26 +16,26 @@ namespace PriceApp_API.Controllers
             _superStructureEstimateService = superStructureEstimateService;
         }
 
-        [Authorize]
+       /* [Authorize]*/
         [HttpPost("wallBlockWork")]
-        public async Task<IActionResult> CreateBuildingFloorWallWorkAsnc([FromBody] double girth, double buildingFloorHeight, string appellation)
+        public async Task<IActionResult> CreateBuildingFloorWallWorkAsnc(double girth, double buildingFloorHeight, string appellation)
         {
             var result = await _superStructureEstimateService.CreateBuildingWallBlockWorkAsync(girth, buildingFloorHeight, appellation);
             return Ok(result);
         }
 
-        [Authorize]
+       /* [Authorize]*/
         [HttpPost("lintel")]
-        public async Task<IActionResult> CreateLintel([FromBody] double girth, string appellation)
+        public async Task<IActionResult> CreateLintel(double girth, string appellation)
         {
             var result = await _superStructureEstimateService.CreateLintelAsync(girth, appellation);
             return Ok(result);
 
         }
 
-        [Authorize]
+      /*  [Authorize]*/
         [HttpPost("wallColumn")]
-        public async Task<IActionResult> CreateWallColumn([FromBody] double girth, double wallHeight, string appellation)
+        public async Task<IActionResult> CreateWallColumn(double girth, double wallHeight, string appellation)
         {
             var result = await _superStructureEstimateService.CreateWallColumnAsync(girth, wallHeight, appellation);
             return Ok(result);

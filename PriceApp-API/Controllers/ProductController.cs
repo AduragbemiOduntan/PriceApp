@@ -20,9 +20,8 @@ namespace PriceApp_API.Controllers
         }
 
         /*[Authorize]*/
-        [HttpPost]
-        [Route("createProduct")]
-        public async Task<IActionResult> CreateProduct([FromBody]ProductRequestDto productRequest)
+        [HttpPost("createProduct")]
+        public async Task<IActionResult> CreateProduct(ProductRequestDto productRequest)
         {
             var result = await _productService.CreateProduct(productRequest);
             return Ok(result);
@@ -39,7 +38,7 @@ namespace PriceApp_API.Controllers
 
         /*[Authorize]*/
         [HttpGet("id")]
-        public async Task<IActionResult> GetProductById([FromBody]int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
             var result = await _productService.GetProductByIdAsync(id);
             return Ok(result);
@@ -47,31 +46,31 @@ namespace PriceApp_API.Controllers
 
         /*[Authorize]*/
         [HttpGet("name")]
-        public async Task<IActionResult> GetProductByName([FromBody]string productName)
+        public async Task<IActionResult> GetProductByName(string productName)
         {
             var result = await _productService.GetProductByNameAsync(productName);
             return Ok(result);
         }
 
        /* [Authorize]*/
-        [HttpGet("keyword")]
-        public async Task<IActionResult> GetProductByKeyWord([FromBody]string keyword)
+/*        [HttpGet("keyword")]
+        public async Task<IActionResult> GetProductByKeyWord(string keyword)
         {
             var result = await _productService.GetProductByKeyWordAsync(keyword);
             return Ok(result);
-        }
+        }*/
 
          /*[Authorize] */
-         [HttpGet("byState")]
-        public async Task<IActionResult> GetProductPriceByState([FromBody]string productName, string state)
+/*         [HttpGet("byState")]
+        public async Task<IActionResult> GetProductPriceByState(string productName, string state)
         {
             var result = await _productService.GetProductPriceByStateAsync(productName, state);
             return Ok(result);
-        }
+        }*/
 
         /*[Authorize]*/
         [HttpPut]
-        public async Task<IActionResult> PutProduct([FromBody]ProductUpdateRequestDto productRequest, int id)
+        public async Task<IActionResult> PutProduct(ProductUpdateRequestDto productRequest, int id)
         {
             var result = await _productService.UpdateProductUnitPriceAsync(productRequest, id);
             return Ok(result);

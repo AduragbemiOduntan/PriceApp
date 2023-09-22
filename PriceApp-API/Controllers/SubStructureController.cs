@@ -14,41 +14,41 @@ namespace PriceApp_API.Controllers
             _subStructureEstimateService = subStructureEstimateService;
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpPost("foundationBaseCasting")]
-        public async Task<IActionResult> CreateFoundationBaseCasting([FromBody]double girth, string appellation)
+        public async Task<IActionResult> CreateFoundationBaseCasting(double girth, string appellation)
         {
             var result = await _subStructureEstimateService.CreateFoundationBaseCastingAsync(girth, appellation);
             return Ok(result);
         }
 
-        [Authorize]
+     /*   [Authorize]*/
         [HttpPost("foundationColumnAndReinforcement")]
-        public async Task<IActionResult> CreateFoundationColumnAndReinforcement([FromBody] double girth, string appellation)
+        public async Task<IActionResult> CreateFoundationColumnAndReinforcement( double girth, string appellation)
         {
             var result = await _subStructureEstimateService.CreateFoundationColumnAndReinforcementAsync(girth, appellation);
             return Ok(result);
         }
 
-        [Authorize]
+      /*  [Authorize]*/
         [HttpPost("foundationBlockwork")]
-        public async Task<IActionResult> CreateFoundationBlockWorkA([FromBody] double girth, string appellation)
+        public async Task<IActionResult> CreateFoundationBlockWorkA(double girth, string appellation)
         {
             var result = await _subStructureEstimateService.CreateFoundationBlockWorkAsync(girth, appellation);
             return Ok(result);
         }
 
-        [Authorize]
+     /*   [Authorize]*/
         [HttpPost("foundationBackfilling")]
-        public async Task<IActionResult> CreateFoundationBackfilling([FromBody] double buildingLength, double buildingBreath, string appellation)
+        public async Task<IActionResult> CreateFoundationBackfilling(double buildingLength, double buildingBreath, string appellation)
         {
             var result = await _subStructureEstimateService.CreateFoundationBackfillingAsync(buildingLength, buildingBreath, appellation);
             return Ok(result);
         }
 
-        [Authorize]
+      /*  [Authorize]*/
         [HttpPost("germanFloor")]
-        public async Task<IActionResult> CreateGermanFloor([FromBody] double buildingLength, double buildingBreath, string appellation)
+        public async Task<IActionResult> CreateGermanFloor(double buildingLength, double buildingBreath, string appellation)
         {
             var result = await _subStructureEstimateService.CreateGermanFloorAsync(buildingLength, buildingBreath, appellation);
             return Ok(result);

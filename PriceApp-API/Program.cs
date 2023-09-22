@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using PriceApp_API.Extensions;
 using PriceApp_Application.Common;
 using Serilog;
@@ -22,6 +23,12 @@ builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.AddSwaggerGen();
 /*builder.Services.ConfigureSwaggerAuth();*/
 
+// Configure the API versioning properties of the project. 
+builder.Services.AddApiVersioningConfigured();
+
+// Add a Swagger generator and Automatic Request and Response annotations:
+builder.Services.AddSwaggerSwashbuckleConfigured();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 var app = builder.Build();
@@ -29,8 +36,20 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    // Enable middleware to serve the generated OpenAPI definition as JSON files.
     app.UseSwagger();
-    app.UseSwaggerUI();
+
+    // Enable middleware to serve Swagger-UI (HTML, JS, CSS, etc.) by specifying the Swagger JSON files(s).
+    var descriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+    app.UseSwaggerUI(options =>
+    {
+        // Build a swagger endpoint for each discovered API version
+        foreach (var description in descriptionProvider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint($"{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        }
+    });
 }
 else if (app.Environment.IsProduction())
 {

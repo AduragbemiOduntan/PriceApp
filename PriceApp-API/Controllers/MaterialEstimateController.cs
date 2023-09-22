@@ -16,12 +16,12 @@ namespace PriceApp_API.Controllers
         }
 
    /*     [Authorize]*/
-        [HttpGet("appellationAndStage")]
+/*        [HttpGet("appellationAndStage")]
         public async Task<IActionResult> GetMaterialEstimateByAppelationAndStage(string appellation, string stage)
         {
             var result = await _materialEstimateService.GetMaterialEstimateByAppelationAndStageAsync(appellation, stage);
             return Ok(result);
-        }
+        }*/
 
     /*    [Authorize]*/
         [HttpGet]
