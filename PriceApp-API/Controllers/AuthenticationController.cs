@@ -19,6 +19,9 @@ namespace PriceApp_API.Controllers
             _authenticationService = authenticationService;
         }
 
+        /// <summary>
+        /// Register a user. Takes in user DTO as parameter
+        /// </summary>
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody]UserRequestDto userRequest)
         {
@@ -26,6 +29,9 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// User login. Takes login DTO as parameter
+        /// </summary>
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromBody] LoginRequestDto loginRequest)
         {
@@ -33,6 +39,9 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Email confirmation token. Takes token and email as parameter
+        /// </summary>
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery]string token, string email)
         {
@@ -40,6 +49,9 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Refresh token. Takes token DTO as parameter
+        /// </summary>
         [HttpPost("refresh")]
         public async Task<IActionResult> Refresh([FromBody] TokenDto tokenDto)
         {

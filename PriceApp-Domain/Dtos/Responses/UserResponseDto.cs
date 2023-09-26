@@ -9,8 +9,8 @@ namespace PriceApp_Domain.Dtos.Responses
 {
     public class UserResponseDto
     {
-        public string? Name { get; init; }
+        public string? FirstName { get; init; }
+        public string? LastName { get; init; }
         public string? Email { get; init; }
-        public string Password { get; init; }
     }
 }
