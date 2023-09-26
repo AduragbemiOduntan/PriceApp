@@ -19,6 +19,9 @@ namespace PriceApp_API.Controllers
             _productService = productService;
         }
 
+        /// <summary>
+        /// Create new product. Take product DTO as parameter
+        /// </summary>
         /*[Authorize]*/
         [HttpPost("createProduct")]
         public async Task<IActionResult> CreateProduct(ProductRequestDto productRequest)
@@ -27,6 +30,9 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get all created products. Default pagination page number = 1, page size = 10
+        /// </summary>
         /*[Authorize]*/
         [HttpGet]
         public async Task<IActionResult> GetAllProduct([FromQuery]ProductParameters productParameters)
@@ -36,6 +42,9 @@ namespace PriceApp_API.Controllers
             return Ok(result.Data.products);
         }
 
+        /// <summary>
+        /// Get a single product by ID. Takes user ID as parameter
+        /// </summary>
         /*[Authorize]*/
         [HttpGet("id")]
         public async Task<IActionResult> GetProductById(int id)
@@ -44,30 +53,20 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get product by product name. Takes product name as parameter
+        /// </summary>
         /*[Authorize]*/
-        [HttpGet("name")]
+        [HttpGet("productname")]
         public async Task<IActionResult> GetProductByName(string productName)
         {
             var result = await _productService.GetProductByNameAsync(productName);
             return Ok(result);
         }
 
-       /* [Authorize]*/
-/*        [HttpGet("keyword")]
-        public async Task<IActionResult> GetProductByKeyWord(string keyword)
-        {
-            var result = await _productService.GetProductByKeyWordAsync(keyword);
-            return Ok(result);
-        }*/
-
-         /*[Authorize] */
-/*         [HttpGet("byState")]
-        public async Task<IActionResult> GetProductPriceByState(string productName, string state)
-        {
-            var result = await _productService.GetProductPriceByStateAsync(productName, state);
-            return Ok(result);
-        }*/
-
+        /// <summary>
+        /// Update a single product by ID. Takes product ID as parameter
+        /// </summary>
         /*[Authorize]*/
         [HttpPut]
         public async Task<IActionResult> PutProduct(ProductUpdateRequestDto productRequest, int id)
@@ -76,16 +75,34 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-/*        [HttpPost("image/{id}")]
-        public IActionResult UploadProfilePic(int productId, IFormFile file)
-        {
-            var result = _productService.UploadProfileImage(productId, file);
-            if (result.Result.Succeeded)
-            {
-                return Ok(new { ImageUrl = result.Result.Data.Item2 });
-            }
-            return NotFound();
-        }*/
+        /* [Authorize]*/
+        /*        [HttpGet("keyword")]
+                public async Task<IActionResult> GetProductByKeyWord(string keyword)
+                {
+                    var result = await _productService.GetProductByKeyWordAsync(keyword);
+                    return Ok(result);
+                }*/
+
+        /*[Authorize] */
+        /*         [HttpGet("byState")]
+                public async Task<IActionResult> GetProductPriceByState(string productName, string state)
+                {
+                    var result = await _productService.GetProductPriceByStateAsync(productName, state);
+                    return Ok(result);
+                }*/
+
+
+
+        /*        [HttpPost("image/{id}")]
+                public IActionResult UploadProfilePic(int productId, IFormFile file)
+                {
+                    var result = _productService.UploadProfileImage(productId, file);
+                    if (result.Result.Succeeded)
+                    {
+                        return Ok(new { ImageUrl = result.Result.Data.Item2 });
+                    }
+                    return NotFound();
+                }*/
 
         /*        [HttpDelete]
                 public async Task<IActionResult> DeleteProduct(int id, bool trackChanges)

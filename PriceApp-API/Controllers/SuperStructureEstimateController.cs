@@ -16,7 +16,10 @@ namespace PriceApp_API.Controllers
             _superStructureEstimateService = superStructureEstimateService;
         }
 
-       /* [Authorize]*/
+        /// <summary>
+        /// Create building wall block work material cost estimate. Takes the building girth, wall height and an appellation as parameter
+        /// </summary>
+        /* [Authorize]*/
         [HttpPost("wallBlockWork")]
         public async Task<IActionResult> CreateBuildingFloorWallWorkAsnc(double girth, double buildingFloorHeight, string appellation)
         {
@@ -24,7 +27,10 @@ namespace PriceApp_API.Controllers
             return Ok(result);
         }
 
-       /* [Authorize]*/
+        /// <summary>
+        /// Create building lintel material cost estimate. Takes the building girth and an appellation as parameter
+        /// </summary>
+        /* [Authorize]*/
         [HttpPost("lintel")]
         public async Task<IActionResult> CreateLintel(double girth, string appellation)
         {
@@ -33,7 +39,10 @@ namespace PriceApp_API.Controllers
 
         }
 
-      /*  [Authorize]*/
+        /// <summary>
+        /// Create building wall column material cost estimate. Takes the building girth, wall height and an appellation as parameter
+        /// </summary>
+        /*  [Authorize]*/
         [HttpPost("wallColumn")]
         public async Task<IActionResult> CreateWallColumn(double girth, double wallHeight, string appellation)
         {
