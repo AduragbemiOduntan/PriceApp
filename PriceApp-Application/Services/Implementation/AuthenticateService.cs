@@ -47,7 +47,7 @@ namespace PriceApp_Application.Services.Implementation
             newUser.UserName = userRequest.Email;
 
             var createdUser = await _userManager.CreateAsync(newUser, userRequest.Password);
-            if(!createdUser.Succeeded)
+            if (!createdUser.Succeeded)
             {
                 return StandardResponse<IdentityResult>.Failed($"User creation failed");
             }
@@ -191,8 +191,8 @@ namespace PriceApp_Application.Services.Implementation
         {
             var principal = GetPrincipalFromExpiredToken(tokenDto.AccessToken);
             var user = await _userManager.FindByNameAsync(principal.Identity.Name);
-/*            if (user == null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-                throw new RefreshTokenBadRequest();*/
+            /*            if (user == null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+                            throw new RefreshTokenBadRequest();*/
             _user = user;
             return await CreateToken(populateExp: false);
         }

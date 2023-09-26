@@ -14,23 +14,32 @@ namespace PriceApp_API.Controllers
             _settingOutStageService = settingOutStageService;
         }
 
-       /* [Authorize]*/
+        /// <summary>
+        /// Create setting-out material cost estimate. Takes building setback peremeter, stage, state, appellation as parameter
+        /// </summary>
+        /*[Authorize]*/
         [HttpPost]
-        public async Task<IActionResult> CreateSettingOut([FromBody]double buidingSetbackPerimeter, string stage, string state, string appellation)
+        public async Task<IActionResult> CreateSettingOut(double buidingSetbackPerimeter, string stage, string state, string appellation)
         {
             var result = await _settingOutStageService.CreateSettingOutAsync(buidingSetbackPerimeter, stage, state, appellation);
             return Ok(result);
         }
 
-       /* [Authorize]*/
+        /// <summary>
+        /// Get setting-out material cost estimate by ID. Takes state and appellation as parameter
+        /// </summary>
+        /*[Authorize]*/
         [HttpGet("uniqueId")]
-        public async Task<IActionResult> GetSettingOutByAppellation([FromBody]string state, string appellation)
+        public async Task<IActionResult> GetSettingOutByAppellation(string state, string appellation)
         {
             var result = await _settingOutStageService.GetSettingOutByAppellationAsync(state, appellation);
             return Ok(result);
         }
 
-       /* [Authorize]*/
+        /// <summary>
+        /// Get all setting-out material cost estimate. Takes no parameter
+        /// </summary>
+        /*[*//*Authorize]*/
         [HttpGet]
         public async Task<IActionResult> GetAllSettingOut()
         {
