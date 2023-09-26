@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  priceapp-api:
+    image: ${DOCKER_REGISTRY-}priceappapi
+    build:
+      context: .
+      dockerfile: PriceApp-API/Dockerfile

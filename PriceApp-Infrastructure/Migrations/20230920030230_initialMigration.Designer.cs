@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 
@@ -11,13 +12,15 @@ using PriceApp_Infrastructure.Persistence.ApplicationDbContext;
 namespace PriceApp_Infrastructure.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230920030230_initialMigration")]
+    partial class initialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -252,6 +255,9 @@ namespace PriceApp_Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -281,9 +287,7 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-
                             CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3107),
-
                             Description = "Sharp sand",
                             ProductName = "Sharp Sand 5 Ton Trip",
                             State = "Lagos",
@@ -333,7 +337,6 @@ namespace PriceApp_Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-
                             CreatedAt = new DateTime(2023, 9, 20, 4, 2, 30, 74, DateTimeKind.Local).AddTicks(3185),
                             Description = "Hard, granular stone used for construction",
                             ProductName = "3/4 Granite 5 Ton Trip",
@@ -609,19 +612,15 @@ namespace PriceApp_Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
