@@ -56,7 +56,7 @@ else if (app.Environment.IsProduction())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "PriceApp V1");
-        c.RoutePrefix = "documentation";  // Set Swagger UI at apps root    
+        c.RoutePrefix = "swagger";  // Set Swagger UI at apps root    
     });
     /*app.UseHsts();*/
 }
