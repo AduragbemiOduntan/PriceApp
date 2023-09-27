@@ -53,7 +53,12 @@ if (app.Environment.IsDevelopment())
 }
 else if (app.Environment.IsProduction())
 {
-    app.UseHsts();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "PriceApp V1");
+        c.RoutePrefix = "documentation";  // Set Swagger UI at apps root    
+    });
+    /*app.UseHsts();*/
 }
 
 /*app.UseForwardedHeaders(new ForwardedHeadersOptions
