@@ -37,9 +37,9 @@ namespace PriceApp_API.Extensions
             {
                 Title = "Web API Price Application",
                 Version = description.ApiVersion.ToString(),
-                Description = "A software solution engineered for professionals, providing real-time product pricing information and precise estimation tools to facilitate accurate work quotations based on current market prices",
+                Description = "A solution engineered for professionals, providing real-time product pricing information and precise estimation tools to facilitate accurate work quotations based on current market prices",
                 Contact = new OpenApiContact() { Name = "Price Application", Email = "priceapplication@gmail.com" },
-                License = new OpenApiLicense() { Name = "MIT License", Url = new Uri("https://opensource.org/licenses/MIT") }
+                /*License = new OpenApiLicense() { Name = "MIT License", Url = new Uri("https://opensource.org/licenses/MIT") }*/
             };
 
             if (description.IsDeprecated)
