@@ -53,9 +53,14 @@ if (app.Environment.IsDevelopment())
 }
 else if (app.Environment.IsProduction())
 {
+    // Enable middleware to serve the generated OpenAPI definition as JSON files.
+    app.UseSwagger();
+
+    string virDir = app.Configuration.GetSection("VirtualDirectory").Value;
+
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("https://priceapp.onrender.com/swagger/v1/swagger.json", "PriceApp V1");
+        c.SwaggerEndpoint(virDir + "/swagger/v1/swagger.json", "PriceApp V1");
         c.RoutePrefix = "swagger";  // Set Swagger UI at apps root    
     });
     /*app.UseHsts();*/
