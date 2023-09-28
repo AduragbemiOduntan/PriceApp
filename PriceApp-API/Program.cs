@@ -54,15 +54,15 @@ if (app.Environment.IsDevelopment())
 else if (app.Environment.IsProduction())
 {
 
-/*    string virDir = app.Configuration.GetSection("VirtualDirectory").Value;*/
-
+    /*    string virDir = app.Configuration.GetSection("VirtualDirectory").Value;*/
+    app.UseHsts();
     app.UseSwaggerUI(c =>
     {
       /*  c.SwaggerEndpoint(virDir + "/swagger/v1/swagger.json", "PriceApp V1");*/
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "PriceApp");
         c.RoutePrefix = "swagger";  // Set Swagger UI at apps root    
     });
-    /*app.UseHsts();*/
+ 
 }
 
 /*app.UseForwardedHeaders(new ForwardedHeadersOptions
