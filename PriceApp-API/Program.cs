@@ -51,14 +51,12 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
-else if (app.Environment.IsProduction())
+else
 {
-
-    /*    string virDir = app.Configuration.GetSection("VirtualDirectory").Value;*/
+    app.UseSwagger();
     app.UseHsts();
     app.UseSwaggerUI(c =>
     {
-      /*  c.SwaggerEndpoint(virDir + "/swagger/v1/swagger.json", "PriceApp V1");*/
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "PriceApp");
         c.RoutePrefix = "swagger";  // Set Swagger UI at apps root    
     });
