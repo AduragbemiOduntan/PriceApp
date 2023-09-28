@@ -23,7 +23,7 @@ namespace PriceApp_API.Controllers
         /// Create new product. Take product DTO as parameter
         /// </summary>
         /*[Authorize]*/
-        [HttpPost("createProduct")]
+        [HttpPost("createproduct")]
         public async Task<IActionResult> CreateProduct(ProductRequestDto productRequest)
         {
             var result = await _productService.CreateProduct(productRequest);
@@ -68,7 +68,7 @@ namespace PriceApp_API.Controllers
         /// Update a single product by ID. Takes product ID as parameter
         /// </summary>
         /*[Authorize]*/
-        [HttpPut]
+        [HttpPut("id")]
         public async Task<IActionResult> PutProduct(ProductUpdateRequestDto productRequest, int id)
         {
             var result = await _productService.UpdateProductUnitPriceAsync(productRequest, id);

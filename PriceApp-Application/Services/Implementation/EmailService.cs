@@ -24,7 +24,7 @@ namespace PriceApp_Application.Services.Implementation
         public async Task<string> GenerateEmailConfirmationLinkAsync(string userEmail, string token, string scheme)
         {
             // Build the confirmation link URL
-            var confirmationLink = $"{scheme}://localhost:7297/api/Authentication/confirm-email/?email={userEmail}&token={WebUtility.UrlEncode(token)}";
+            var confirmationLink = $"{scheme}://https://priceapp.onrender.com/api/Authentication/confirmemail/?email={userEmail}&token={WebUtility.UrlEncode(token)}";
 
             return confirmationLink;
         }

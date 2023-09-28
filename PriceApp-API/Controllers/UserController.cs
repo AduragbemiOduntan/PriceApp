@@ -58,8 +58,8 @@ namespace PriceApp_API.Controllers
         /// Get a single user by email. Takes user email as parameter
         /// </summary>
         /* [Authorize]*/
-        [HttpGet("uuseremail")]
-        public async Task<IActionResult> GetUserByEmail( string email)
+        [HttpGet("email")]
+        public async Task<IActionResult> GetUserByEmail(string email)
         {
              var result = await _userService.GetUserByEmailAsnc(email);
             return Ok(result);

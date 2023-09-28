@@ -42,7 +42,7 @@ namespace PriceApp_API.Controllers
         /// <summary>
         /// Email confirmation token. Takes token and email as parameter
         /// </summary>
-        [HttpGet("confirmEmail")]
+        [HttpGet("confirmemail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery]string token, string email)
         {
             var result = await _authenticationService.ConfirmEmail(token, email);
